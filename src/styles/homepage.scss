@@ -1,0 +1,96 @@
+
+// HOME PAGE
+
+.page-banner {
+    padding: 150px 0;
+    // max-width: 80%;
+    text-align: center;
+
+    span {
+        font-family: 'Ogg', sans-serif;
+        font-size: 78px;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    p {
+        font-family: 'Neillgates', sans-serif;
+        text-align: right;
+        padding-right: 210px;
+        font-size: 38px;
+        transform: rotate(-5deg);
+    }
+}
+
+
+// Wine Block
+
+.wine-block {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* justify-content: space-around; */
+}
+
+.wine-item {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+
+    .wine-img {
+        width: 100px;
+        /* height: 100px; */
+    }
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+// Category Menu
+
+.category-menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.category-item {
+    cursor: pointer;
+    padding: 10px;
+    margin: 0 10px;
+    transition: border-bottom 0.3s ease-in-out;
+
+    &:hover {
+        border-bottom: 2px solid #333;
+    }
+
+    &.active {
+        border-bottom: 2px solid #333;
+    }
+}
+
+.carousel-button {
+    cursor: pointer;
+    padding: 5px;
+    border: #333 solid 1px;
+}
+
+.carousel-content {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.carousel-inner {
+    display: flex;
+    gap: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
