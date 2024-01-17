@@ -1,31 +1,19 @@
-// import logo from './logo.svg';
-
-import Home from './pages/Home';
-import Footer from './components/Footer';
-import './App.scss';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop/Shop";
+import Footer from "./components/Footer";
+import "./App.scss";
 
 function App() {
   return (
-    <div className='main-wrapper'>
-      <Home />
+    <div className="main-wrapper">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="*" element={<h1>NOT FOUND</h1>} />
+      </Routes>
       <Footer />
     </div>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 

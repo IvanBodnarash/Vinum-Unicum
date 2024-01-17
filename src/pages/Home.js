@@ -1,6 +1,6 @@
-import React from 'react';
-import Header from '../components/Header';
-import WineBlockMain from '../components/WineBlockMain';
+import React from "react";
+import Header from "../components/Header";
+import WineBlockMain from "../components/WineBlockMain";
 
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
@@ -45,14 +45,14 @@ export default function Home() {
 
   const NextArrow = ({ onClick }) => {
     return (
-      <div className='arrow next' onClick={onClick}>
+      <div className="arrow next" onClick={onClick}>
         <MdArrowForwardIos />
       </div>
     );
   };
   const PrevArrow = ({ onClick }) => {
     return (
-      <div className='arrow prev' onClick={onClick}>
+      <div className="arrow prev" onClick={onClick}>
         <MdArrowBackIos />
       </div>
     );
@@ -72,17 +72,17 @@ export default function Home() {
     prevArrow: <PrevArrow />,
   };
   return (
-    <div className=''>
+    <div className="">
       <Header />
-      <div className='home-page-wrapper'>
-        <div className='page-banner'>
+      <div className="home-page-wrapper">
+        <div className="page-banner">
           <span>Our Collection</span>
           <p>Only premium brands</p>
         </div>
       </div>
       <WineBlockMain />
       <div>
-        <div className='slider-carousel'>
+        <div className="slider-carousel">
           <Slider {...settings} className="wine-block-1">
             {data.map((d) => (
               <div className="wine-item-1">
@@ -90,7 +90,7 @@ export default function Home() {
                   <img className="wine-img" src={d.imageUrl} alt={d.name} />
                 </div>
 
-                <div className='item-info'>
+                <div className="item-info">
                   <h3>{d.name}</h3>
                   <p>{d.description}</p>
                 </div>
@@ -100,6 +100,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
-
+  );
 }
