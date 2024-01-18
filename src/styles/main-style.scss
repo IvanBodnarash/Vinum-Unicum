@@ -54,10 +54,15 @@
                 font-weight: 500;
                 list-style: none;
                 text-transform: uppercase;
-                color: white;
                 font-size: 12px;
+                color: white;
                 cursor: pointer;
                 font-family: 'Montserrat', sans-serif;
+                
+                a {
+                    color: white;
+                    text-decoration: none;
+                }
             }
             
             .nav-item-sign-in span:first-child {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
@@ -17,10 +18,10 @@ export default function Header() {
             <nav className='header-nav'>
                 <ul className='header-nav-items'>
                     <li className='nav-item'>
-                        <span>Our Collection</span>
+                        <Link to='/home'>Our Collection</Link>
                     </li>
                     <li className='nav-item'>
-                        <span>Shop</span>
+                        <Link to='/shop'>Shop</Link>
                     </li>
                     <li className='nav-item'>
                         <span>Discover</span>

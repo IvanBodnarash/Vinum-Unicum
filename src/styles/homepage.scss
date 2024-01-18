@@ -79,6 +79,10 @@
     margin: 10px auto;
     margin-bottom: 0;
     transition: transform 0.3s ease-in-out;
+
+    .slick-list {
+        height: 600px;
+    }
 }
 
 .slick-slide {
@@ -88,6 +92,10 @@
 .item-info {
     margin-top: 15px;
 }
+
+// .slick-track {
+//     margin-bott: 0;
+// }
 
 .arrow {
     font-size: 28px;
@@ -106,12 +114,12 @@
 
 .arrow.next {
     right: 0%;
-    top: 25%;
+    top: 50%;
 }
 
 .arrow.prev {
     left: 0%;
-    top: 25%;
+    top: 50%;
 }
 
 // Category Menu
