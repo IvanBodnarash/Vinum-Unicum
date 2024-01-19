@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="main-wrapper">
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="*" element={<h1>NOT FOUND</h1>} />
       </Routes>

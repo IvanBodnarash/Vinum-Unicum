@@ -18,7 +18,7 @@ export default function Header() {
             <nav className='header-nav'>
                 <ul className='header-nav-items'>
                     <li className='nav-item'>
-                        <Link to='/home'>Our Collection</Link>
+                        <Link to='/'>Our Collection</Link>
                     </li>
                     <li className='nav-item'>
                         <Link to='/shop'>Shop</Link>

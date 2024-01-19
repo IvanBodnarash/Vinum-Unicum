@@ -60,7 +60,7 @@ export default function Home() {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 700,
     slidesToShow: 3,
     slidesToScroll: 1,
