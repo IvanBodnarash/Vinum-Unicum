@@ -1,96 +1,94 @@
-
 // HOME PAGE
 
 .page-banner {
-    padding: 150px 0;
-    // max-width: 80%;
-    text-align: center;
+  padding: 150px 0;
+  // max-width: 80%;
+  text-align: center;
 
-    span {
-        font-family: 'Ogg', sans-serif;
-        font-size: 78px;
-        text-transform: uppercase;
-        font-weight: 500;
-    }
+  span {
+    font-family: "Ogg", sans-serif;
+    font-size: 78px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
 
-    p {
-        font-family: 'Neillgates', sans-serif;
-        text-align: right;
-        padding-right: 210px;
-        font-size: 38px;
-        transform: rotate(-5deg);
-    }
+  p {
+    font-family: "Neillgates", sans-serif;
+    text-align: right;
+    padding-right: 210px;
+    font-size: 38px;
+    transform: rotate(-5deg);
+  }
 }
-
 
 // Wine Block
 
 .wine-block,
 .wine-block-1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    // justify-content: center;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // justify-content: center;
+  justify-content: space-around;
 }
 
 .wine-item {
-    text-align: center;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    width: 200px;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 
-    .wine-img {
-        width: 100px;
-        /* height: 100px; */
-    }
+  .wine-img {
+    width: 100px;
+    /* height: 100px; */
+  }
 
-    &:hover {
-        transform: scale(1.05);
-    }
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .wine-item-1 {
-    display: flex;
-    text-align: center;
-    // border: 1px solid #ddd;
-    padding: 25px;
-    margin: 10px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    transition: transform 0.3s ease-in-out;
+  display: flex;
+  text-align: center;
+  // border: 1px solid #ddd;
+  padding: 25px;
+  margin: 10px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: transform 0.3s ease-in-out;
 
-    .wine-img {
-        margin: auto;
-        width: 200px;
-        /* height: 100px; */
-    }
+  .wine-img {
+    margin: auto;
+    width: 200px;
+    /* height: 100px; */
+  }
 
-    &:hover {
-        transform: scale(1.05);
-    }
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .slider-carousel {
-    width: 60%;
-    margin: 10px auto;
-    margin-bottom: 0;
-    transition: transform 0.3s ease-in-out;
+  width: 60%;
+  margin: 10px auto;
+  margin-bottom: 0;
+  transition: transform 0.3s ease-in-out;
 
     .slick-list {
-        height: 400px;
+        height: 600px;
     }
 }
 
 .slick-slide {
-    // margin: 15px;
+    margin: 15px;
 }
 
 .item-info {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 // .slick-track {
@@ -98,68 +96,67 @@
 // }
 
 .arrow {
-    font-size: 28px;
-    position: absolute;
-    cursor: pointer;
-    z-index: 10;
+  font-size: 28px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
 
-    svg {
-        transition: color 500ms;
+  svg {
+    transition: color 500ms;
 
-        &:hover {
-            color: red;
-        }
+    &:hover {
+      color: red;
     }
+  }
 }
 
 .arrow.next {
-    right: 0%;
-    top: 50%;
+  right: 0%;
+  top: 50%;
 }
 
 .arrow.prev {
-    left: 0%;
-    top: 50%;
+  left: 0%;
+  top: 50%;
 }
 
 // Category Menu
 
 .category-menu {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .category-item {
-    cursor: pointer;
-    padding: 10px;
-    margin: 0 10px;
-    transition: border-bottom 0.3s ease-in-out;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0 10px;
+  transition: border-bottom 0.3s ease-in-out;
 
-    &:hover {
-        border-bottom: 2px solid #333;
-    }
+  &:hover {
+    border-bottom: 2px solid #333;
+  }
 
-    &.active {
-        border-bottom: 2px solid #333;
-    }
+  &.active {
+    border-bottom: 2px solid #333;
+  }
 }
 
 .carousel-button {
-    cursor: pointer;
-    padding: 5px;
-    border: #333 solid 1px;
+  cursor: pointer;
+  padding: 5px;
+  border: #333 solid 1px;
 }
 
 .carousel-content {
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
 }
 
 .carousel-inner {
-    display: flex;
-    gap: 10px;
-    transition: transform 0.3s ease-in-out;
-  }
-  
+  display: flex;
+  gap: 10px;
+  transition: transform 0.3s ease-in-out;
+}
