@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 import {
   PiShoppingCartSimpleLight,
   PiShoppingCartSimpleFill,
@@ -8,12 +9,16 @@ import {
 import "../../styles/shop.scss";
 
 const WineCard = ({ wine }) => {
+  const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
   const [hover, sethover] = useState(false);
+  const selectItem = (wine) => {
+    localStorage.setItem("selectedItem", JSON.stringify(wine));
+    navigate(`./${wine.id}`);
+  };
 
   return (
-    // simple card can be improved
-    <div className="sample-card">
+    <div className="sample-card" onClick={() => selectItem(wine)}>
       <div onClick={() => setSaved(!saved)}>
         {!saved ? (
           <GoHeart size={24} className="heart" />
