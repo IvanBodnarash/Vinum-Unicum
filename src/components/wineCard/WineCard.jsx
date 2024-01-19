@@ -11,7 +11,7 @@ import "../../styles/shop.scss";
 const WineCard = ({ wine }) => {
   const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
-  const [hover, sethover] = useState(false);
+  const [hover, setHover] = useState(false);
   const selectItem = (wine) => {
     localStorage.setItem("selectedItem", JSON.stringify(wine));
     navigate(`./${wine.id}`);
@@ -39,10 +39,10 @@ const WineCard = ({ wine }) => {
         <input type="number" min="1" defaultValue="1" />
         <button
           onMouseEnter={() => {
-            sethover(true);
+            setHover(true);
           }}
           onMouseLeave={() => {
-            sethover(false);
+            setHover(false);
           }}
         >
           {!hover ? (
