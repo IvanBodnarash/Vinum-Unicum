@@ -1,8 +1,9 @@
 .shop-wrapper {
   padding: 0px 8%;
+  padding: 6em;
 
   .header {
-    padding-top: 4em;
+    padding-top: 2em;
     padding-bottom: 2em;
 
     .breadcrumb {
@@ -71,18 +72,31 @@
 
   .sample-card {
     width: 32%;
-    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75em;
+    padding: 1em;
     border-radius: 0.5em;
     overflow: hidden;
     position: relative;
     text-align: center;
     margin-bottom: 1em;
     cursor: pointer;
+    transition: scale 0.2s ease-in-out;
+
+    h3 {
+      font-size: 1.25em;
+    }
 
     &:hover {
       outline: auto;
+      scale: 102%;
+      box-shadow: 1px 1px 5px gray;
 
-      h4 {
+      h4,
+      h3 {
         text-decoration: underline;
       }
     }
@@ -102,6 +116,37 @@
       right: 1em;
       top: 1em;
       cursor: pointer;
+    }
+
+    .add-container {
+      display: flex;
+      gap: 0.5em;
+      width: 60%;
+      height: 2.5em;
+
+      input {
+        flex: 1;
+        width: 50%;
+        text-align: center;
+        border-radius: 0.5em;
+        border: 1px solid lightgray;
+      }
+
+      button {
+        flex: 1;
+        background-color: lightgray;
+        border-radius: 0.5em;
+        display: flex;
+        gap: 0.5em;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #808080;
+        }
+      }
     }
   }
 }

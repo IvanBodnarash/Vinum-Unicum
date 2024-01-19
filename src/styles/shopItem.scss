@@ -1,0 +1,101 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 8%;
+  padding: 6em;
+
+  header {
+    padding: 2em 0;
+
+    .breadcrumb {
+      display: flex;
+      gap: 0.5em;
+    }
+  }
+
+  .wine-info {
+    display: flex;
+    gap: 6em;
+
+    h1 {
+      font-size: 2.5em;
+    }
+
+    h4 {
+      font-size: 1.5em;
+    }
+
+    .desc {
+      font-size: 1.1em;
+    }
+  }
+
+  aside {
+    border: 1px solid lightgray;
+    border-radius: 0.5em;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  article {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    position: relative;
+
+    .price {
+      font-size: 2em;
+      color: slategray;
+      text-align: center;
+    }
+
+    .btnContainer {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 1em;
+
+      input {
+        width: 20%;
+        height: 3em;
+        text-align: center;
+        border-radius: 0.5em;
+        border: 1px solid lightgray;
+      }
+
+      button {
+        background-color: lightgray;
+        border-radius: 0.5em;
+        height: 3em;
+        flex: 1;
+        display: flex;
+        gap: 0.5em;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #808080;
+        }
+      }
+    }
+
+    .notice {
+      position: absolute;
+      bottom: 0;
+      font-size: 0.9em;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../components/Header";
 import WineBlockMain from "../components/WineBlockMain";
 
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
@@ -73,7 +72,6 @@ export default function Home() {
   };
   return (
     <div className="">
-      <Header />
       <div className="home-page-wrapper">
         <div className="page-banner">
           <span>Our Collection</span>
