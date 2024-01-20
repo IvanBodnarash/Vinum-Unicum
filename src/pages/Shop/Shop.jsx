@@ -23,7 +23,7 @@ const Shop = () => {
         <header className="header">
           <div className="breadcrumb">
             <span>
-              <Link to={"/home"}>Home</Link>
+              <Link to={"/"}>Home</Link>
             </span>
             <span>/</span>
             <span>Shop</span>
