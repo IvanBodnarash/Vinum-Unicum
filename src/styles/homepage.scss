@@ -1,8 +1,7 @@
 // HOME PAGE
 
 .page-banner {
-  padding: 150px 0;
-  // max-width: 80%;
+  margin: 250px 0 60px;
   text-align: center;
 
   span {
@@ -21,10 +20,9 @@
   }
 }
 
-// Wine Block
+// Brand Wines Block
 
-.wine-block,
-.wine-block-1 {
+.wine-block {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,26 +31,8 @@
 }
 
 .wine-item {
-  text-align: center;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px;
-  width: 200px;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-
-  .wine-img {
-    width: 100px;
-    /* height: 100px; */
-  }
-
-  &:hover {
-    transform: scale(1.05);
-  }
-}
-
-.wine-item-1 {
   display: flex;
+  flex-direction: column;
   text-align: center;
   // border: 1px solid #ddd;
   padding: 25px;
@@ -83,10 +63,6 @@
     }
 }
 
-// .slick-slide {
-//     margin: 15px;
-// }
-
 .item-info {
   margin-top: 15px;
 }
@@ -112,12 +88,12 @@
 
 .arrow.next {
   right: 0%;
-  top: 50%;
+  top: 35%;
 }
 
 .arrow.prev {
   left: 0%;
-  top: 50%;
+  top: 35%;
 }
 
 // Category Menu
@@ -130,16 +106,20 @@
 
 .category-item {
   cursor: pointer;
+  font-family: 'Ogg', serif;
+  font-size: 22px;
   padding: 10px;
   margin: 0 10px;
+  border-bottom: 1px solid transparent;
+
   transition: border-bottom 0.3s ease-in-out;
 
   &:hover {
-    border-bottom: 2px solid #333;
+    border-bottom: 1px solid #333;
   }
 
   &.active {
-    border-bottom: 2px solid #333;
+    border-bottom: 1px solid #333;
   }
 }
 
@@ -159,4 +139,19 @@
   display: flex;
   gap: 10px;
   transition: transform 0.3s ease-in-out;
+}
+
+.category-buttons {
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin: 0 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:active {
+      border-bottom: 2px solid #000;
+    }
+  }
 }

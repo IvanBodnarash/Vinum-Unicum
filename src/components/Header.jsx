@@ -11,10 +11,10 @@ export default function Header() {
     <header>
         <div className='header-wrapper'>
             {/* use a tag for logo */}
-            <button className='header-logo'>
-                <img src='' alt=''></img>
-                logo
-            </button>
+            <span className='header-logo'>
+                {/* <img src='' alt=''></img> */}
+                VINUM UNICUM
+            </span>
             <nav className='header-nav'>
                 <ul className='header-nav-items'>
                     <li className='nav-item'>
@@ -24,13 +24,13 @@ export default function Header() {
                         <Link to='/shop'>Shop</Link>
                     </li>
                     <li className='nav-item'>
-                        <span>Discover</span>
+                        <Link to='/discover'>Discover</Link>
                     </li>
                     <li className='nav-item'>
-                        <span>About Us</span>
+                        <Link to='/aboutUs'>About Us</Link>
                     </li>
                     <li className='nav-item'>
-                        <span>Contact</span>
+                        <Link to='/contact'>Contact</Link>
                     </li>
                     <li className='nav-item'>
                         <span><FontAwesomeIcon icon={faSearch} /></span>

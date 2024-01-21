@@ -1,4 +1,4 @@
-const brandWines = {
+const brandWinesData = {
     red: [
         {
             id: 1,
@@ -173,3 +173,5 @@ const brandWines = {
         // ...more sparkling wines
     ],
 };
+
+export default brandWinesData;
