@@ -7,6 +7,7 @@ export default function Footer() {
         backgroundColor: "#808080",
         height: "6em",
         display: "flex",
+        color: "white",
         justifyContent: "center",
         alignItems: "center",
       }}
