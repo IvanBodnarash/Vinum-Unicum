@@ -19,7 +19,12 @@ const WineCard = ({ wine }) => {
 
   return (
     <div className="sample-card" onClick={() => selectItem(wine)}>
-      <div onClick={() => setSaved(!saved)}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          setSaved(!saved);
+        }}
+      >
         {!saved ? (
           <GoHeart size={24} className="heart" />
         ) : (
