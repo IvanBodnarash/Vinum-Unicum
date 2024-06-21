@@ -47,8 +47,12 @@ export default function Header() {
                     >
                         Contact
                     </NavLink>
-                    <span className='nav-item'><FontAwesomeIcon icon={faSearch} /></span>
-                    <span className='nav-item'><FontAwesomeIcon icon={faCartPlus} /></span>
+                    <span className='nav-item'>
+                        <FontAwesomeIcon icon={faSearch} />
+                    </span>
+                    <span className='nav-item'>
+                        <FontAwesomeIcon icon={faCartPlus} />
+                    </span>
                     <div className='nav-item'>
                         <div className='nav-item-sign-in'>
                             <span>Sign In</span>

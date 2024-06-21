@@ -6,7 +6,6 @@ import ShopItem from "./pages/shopItem/ShopItem";
 import Discover from "./pages/Discover/Discover";
 import AboutUs from "./pages/AboutUs/About Us";
 import Contact from "./pages/Contact/Contact";
-// import "./App.scss";
 
 function App() {
   return (
