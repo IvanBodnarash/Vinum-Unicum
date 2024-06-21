@@ -1,6 +1,9 @@
 // HOME PAGE
 .home-page-wrapper {
   position: relative;
+  background-image: url(../img/main-page-banner.png);
+  background-position: top;
+  background-size: cover;
 
   .page-banner {
     width: fit-content;
@@ -12,21 +15,24 @@
     justify-content: center;
     margin: auto;
 
-    span {
+    a {
       font-family: "Ogg", sans-serif;
       font-size: 80px;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
+      color: rgb(218, 218, 218);
+      text-decoration: none;
     }
 
     p {
       font-family: "Neillgates", sans-serif;
       position: absolute;
-      bottom: 280px;
+      color: #9290ff;
+      bottom: 290px;
       right: 270px;
-      font-size: 50px;
-      transform: rotate(-5deg);
+      font-size: 58px;
+      transform: rotate(-15deg);
     }
   }
 }
