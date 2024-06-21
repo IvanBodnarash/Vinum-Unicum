@@ -57,18 +57,47 @@
     .header-nav-items {
       display: flex;
 
+      
+
       .nav-item {
-        position: relative;
+        cursor: pointer;
         margin-left: 2rem;
         padding-top: 2.5rem;
         padding-bottom: 2.5rem;
         font-weight: 500;
         list-style: none;
         text-transform: uppercase;
-        font-size: 12px;
+        text-decoration: none;
+        font-size: 14px;
         color: white;
-        cursor: pointer;
         font-family: "Montserrat", sans-serif;
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+
+        &:after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 1px;
+          display: block;
+          margin-top: 5px;
+          right: 0;
+          background: white;
+          transform-origin: right;
+          transition: transform 0.3s ease, width 0.3s ease, border-width 0.3s ease;
+          transform: scaleX(0.98) rotate(-2deg);
+        }
+
+        &:hover:after,
+        &.active:after {
+          width: 100%;
+          left: 0;
+          background: white;
+          transform-origin: right;
+          transform: scaleX(1) rotate(-2deg);
+          border-width: 0.6px;
+        }
 
         a {
           color: white;
