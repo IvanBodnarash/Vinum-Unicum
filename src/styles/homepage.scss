@@ -1,8 +1,15 @@
 // HOME PAGE
+.home-page-layout {
+  background-image: url(../img/wine-cellar.png);
+  background-position: bottom;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+}
+
 .home-page-wrapper {
   position: relative;
-  background-image: url(../img/main-page-banner.png);
-  background-position: top;
+  background-image: url(../img/main-page-banner2.png);
+  background-position: bottom;
   background-size: cover;
 
   .page-banner {
@@ -21,7 +28,8 @@
       text-transform: uppercase;
       font-weight: 600;
       cursor: pointer;
-      color: rgb(218, 218, 218);
+      // color: rgb(243, 243, 243);
+      color: white;
       text-decoration: none;
     }
 
@@ -39,6 +47,23 @@
 
 // Brand Wines Block
 
+// .wine-brands-component {
+
+// }
+
+.wine-container {
+  height: 120vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brands-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .wine-block {
   display: flex;
   flex-direction: row;
@@ -54,8 +79,9 @@
   // border: 1px solid #ddd;
   padding: 25px;
   margin: 10px;
+  font-size: 22px;
   cursor: pointer;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'CaslonAntique', sans-serif;
   transition: transform 0.3s ease-in-out;
 
   .wine-img {
@@ -82,6 +108,7 @@
 
 .item-info {
   margin-top: 15px;
+  color: rgb(212, 212, 212);
 }
 
 // .slick-track {
@@ -123,20 +150,38 @@
 
 .category-item {
   cursor: pointer;
-  font-family: 'Ogg', serif;
+  font-family: 'Indira', serif;
   font-size: 22px;
+  color: rgb(212, 212, 212);
   padding: 10px;
   margin: 0 10px;
   border-bottom: 1px solid transparent;
-
   transition: border-bottom 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
 
-  &:hover {
-    border-bottom: 1px solid #333;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: white;
+    transform-origin: right;
+    transition: transform 0.3s ease, width 0.3s ease, border-width 0.3s ease;
+    transform: scaleX(0.98) rotate(-2deg);
   }
 
-  &.active {
-    border-bottom: 1px solid #333;
+  &:hover:after,
+  &.active:after {
+    width: 100%;
+    left: 0;
+    background: white;
+    transform-origin: right;
+    transform: scaleX(1) rotate(-2deg);
+    border-width: 0.6px;
   }
 }
 

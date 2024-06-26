@@ -13,7 +13,7 @@ const BrandsWineShop = ({ brandWinesData }) => {
     const categories = Object.keys(brandWinesData);
 
     return (
-        <div>
+        <div className="wine-brands-component">
             <CategoryMenu
                 categories={categories}
                 activeCategory={selectedCategory}

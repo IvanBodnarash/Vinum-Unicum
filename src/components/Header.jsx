@@ -1,9 +1,12 @@
 import React from 'react';
+
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+
+import logo from '../img/logo-white.png';
 
 
 export default function Header() {
@@ -12,8 +15,8 @@ export default function Header() {
         <div className='header-wrapper'>
             {/* use a tag for logo */}
             <span className='header-logo'>
-                {/* <img src='' alt=''></img> */}
-                VINUM UNICUM
+                <img src={logo} alt='logo' className='logo-header'></img>
+                {/* VINUM UNICUM */}
             </span>
             <nav className='header-nav'>
                 <div className='header-nav-items'>
