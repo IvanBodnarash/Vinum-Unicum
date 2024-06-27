@@ -1,6 +1,7 @@
 // HOME PAGE
+
 .home-page-layout {
-  background-image: url(../img/wine-cellar.png);
+  background-image: url(../img/wine-cellar2.png);
   background-position: bottom;
   // background-repeat: no-repeat;
   // background-size: cover;
@@ -16,11 +17,13 @@
     width: fit-content;
     height: 100vh;
     text-align: center;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: auto;
+    transition: transform 0.3s ease-in-out;
 
     a {
       font-family: "Ogg", sans-serif;
@@ -33,26 +36,33 @@
       text-decoration: none;
     }
 
-    p {
+    span {
       font-family: "Neillgates", sans-serif;
       position: absolute;
+      text-transform: none;
+      font-weight: 100;
       color: #9290ff;
       bottom: 290px;
-      right: 270px;
+      right: -100px;
       font-size: 58px;
       transform: rotate(-15deg);
+    }
+
+    &:hover {
+      transform: scale(1.05);
     }
   }
 }
 
 // Brand Wines Block
 
-// .wine-brands-component {
-
-// }
+.wine-carousel-wrapper {
+  position: relative;
+  min-height: 400px;
+}
 
 .wine-container {
-  height: 120vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,12 +92,12 @@
   font-size: 22px;
   cursor: pointer;
   font-family: 'CaslonAntique', sans-serif;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   .wine-img {
     margin: auto;
-    width: 200px;
-    /* height: 100px; */
+    transform: opacity 0.3s ease-in-out;
+    max-height: 200px;
   }
 
   &:hover {
@@ -96,7 +106,7 @@
 }
 
 .slider-carousel {
-  width: 60%;
+  width: 55%;
   margin: 10px auto;
   margin-bottom: 0;
   transition: transform 0.3s ease-in-out;
@@ -111,21 +121,18 @@
   color: rgb(212, 212, 212);
 }
 
-// .slick-track {
-//     margin-bott: 0;
-// }
-
 .arrow {
   font-size: 28px;
   position: absolute;
   cursor: pointer;
   z-index: 10;
+  color: rgb(212, 212, 212);
 
   svg {
     transition: color 500ms;
 
     &:hover {
-      color: red;
+      color: #7d7bf4;
     }
   }
 }
