@@ -58,20 +58,25 @@
 
 .wine-carousel-wrapper {
   position: relative;
-  min-height: 400px;
+  min-height: 450px;
+  overflow: hidden;
 }
 
 .wine-container {
   height: 100vh;
+  position: relative;
+  // width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: all 0.3s ease-in-out;
 }
 
 .brands-component {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 400px;
 }
 
 .wine-block {
@@ -92,11 +97,13 @@
   font-size: 22px;
   cursor: pointer;
   font-family: 'CaslonAntique', sans-serif;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
   transition: all 0.3s ease-in-out;
 
   .wine-img {
     margin: auto;
     transform: opacity 0.3s ease-in-out;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
     max-height: 200px;
   }
 

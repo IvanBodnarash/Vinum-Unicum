@@ -1,6 +1,4 @@
-// CategoryMenu.js
 import React from "react";
-// import "../styles/homepage.scss";
 
 const displayNames = {
   red: "Red Wine",
