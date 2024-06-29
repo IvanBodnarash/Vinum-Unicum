@@ -83,7 +83,7 @@
         overflow: hidden;
 
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           width: 0;
           height: 1px;
@@ -92,7 +92,8 @@
           right: 0;
           background: white;
           transform-origin: right;
-          transition: transform 0.3s ease, width 0.3s ease, border-width 0.3s ease;
+          transition: transform 0.3s ease, width 0.3s ease,
+            border-width 0.3s ease;
           transform: scaleX(0.98) rotate(-2deg);
         }
 
@@ -131,15 +132,105 @@
 
 .footer-main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 150px;
   width: 100%;
-  // position: absolute;
-  color: rgb(212, 212, 212);
-  font-family: "Aquifer", sans-serif;
+  color: rgb(231, 231, 231);
+  font-family: "Montserrat", sans-serif;
   background-image: url(../img/wine-cellar.png);
   background-position: bottom;
   // background-size: cover;
   // background-color: #181B2B;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  padding: 50px 80px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: top;
+}
+
+.footer-section {
+  margin: 15px;
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 14px;
+    color: rgb(182, 182, 182);
+    line-height: 20px;
+  }
+}
+
+.footer-nav {
+  display: flex;
+  transition: none 0.5s cubic-bezier(0.85, 0, 0.3, 1);
+  transition-property: transform, opacity;
+  justify-content: space-between;
+
+  .footer-nav-items {
+    display: flex;
+    flex-direction: column;
+
+    .nav-item {
+      cursor: pointer;
+      padding-bottom: 1rem;
+      font-weight: 500;
+      list-style: none;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-size: 14px;
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 1px;
+        display: block;
+        margin-top: 5px;
+        right: 0;
+        background: white;
+        transform-origin: right;
+        transition: transform 0.3s ease, width 0.3s ease, border-width 0.3s ease;
+        transform: scaleX(0.98) rotate(-2deg);
+      }
+
+      &:hover:after,
+      &.active:after {
+        width: 100%;
+        left: 0;
+        background: white;
+        transform-origin: right;
+        transform: scaleX(1) rotate(-2deg);
+        border-width: 0.6px;
+      }
+    }
+  }
+}
+
+.footer-copyright {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 50px;
+  color: rgb(155, 155, 155);
+}
+
+.footer-about-us,
+.footer-social {
+  width: 300px;
+}
+
+.footer-contact {
+  width: 240px;
 }
