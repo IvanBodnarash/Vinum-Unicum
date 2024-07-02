@@ -32,7 +32,7 @@ const WineCard = ({ wine }) => {
         )}
       </div>
 
-      <img src={wine.imageLink} alt="wine-example" />
+      <img className="wine-img" src={wine.imageLink} alt="wine-example" />
 
       <div className="info">
         <h3>{wine.name}</h3>

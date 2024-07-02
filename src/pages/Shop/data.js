@@ -6,7 +6,7 @@ const mockwines = [
     name: "Cabernet Sauvignon",
     price: 30.99,
     imageLink:
-      "https://marketwines.ca/wp-content/uploads/2023/02/Quintorelli-Riserva-2003.jpg",
+      "https://line39wines.com/cdn/shop/products/Line39_19Cab.png?v=1692278225&width=1500",
     location: "California, USA",
     description:
       "A rich and full-bodied red wine with notes of blackcurrant and cedar.",
