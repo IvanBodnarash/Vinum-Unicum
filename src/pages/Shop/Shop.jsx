@@ -10,17 +10,63 @@ import {
   FormControlLabel,
   RadioGroup,
   Radio,
+  Checkbox,
+  FormGroup,
 } from "@mui/material";
 import "../../styles/main-style.scss";
 import "../../styles/shop.scss";
+import { red } from "@mui/material/colors";
 
 const Shop = () => {
   const [sort, setSort] = useState(false);
+  const [filter, setFilter] = useState(false);
+  const [sortOption, setSortOption] = useState("");
+  const [filters, setFilters] = useState({
+    red: false,
+    white: false,
+    sparkling: false,
+    rose: false,
+  });
+
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    setFilters({
+      ...filters,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const applySorting = (mockwines) => {
+    switch (sortOption) {
+      case "ascending":
+        return mockwines.sort((a, b) => a.relevance - b.relevance);
+      case "descending":
+        return mockwines.sort((a, b) => b.relevance - a.relevance);
+      case "low":
+        return mockwines.sort((a, b) => a.price - b.price);
+      case "high":
+        return mockwines.sort((a, b) => b.price - a.price);
+      default:
+        return mockwines;
+    }
+  };
+
+  const applyFilters = (mockwines) => {
+    const activeFilters = Object.keys(filters).filter((key) => filters[key]);
+    if (activeFilters === 0) return mockwines;
+    return mockwines.filter((mockwines) =>
+      activeFilters.includes(mockwines.type)
+    );
+  };
+
+  const filteredAndSortedWines = applySorting(applyFilters([...mockwines]));
 
   return (
     <ParallaxProvider>
       <main className="shop-wrapper">
-
         <Parallax className="background" speed={-3} scale={[1, 1.03]}>
           <div className="background-overlay"></div>
         </Parallax>
@@ -53,46 +99,103 @@ const Shop = () => {
               <FormControl>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
+                  value={sortOption}
+                  onChange={handleSortChange}
                   name="radio-buttons-group"
                 >
                   <FormControlLabel
                     value="descending"
                     control={<Radio />}
                     label="Relevance - Descending"
-                    style={{ "user-select": "none" }}
+                    style={{ "userSelect": "none" }}
                   />
                   <FormControlLabel
                     value="ascending"
                     control={<Radio />}
                     label="Relevance - Ascending"
-                    style={{ "user-select": "none" }}
+                    style={{ "userSelect": "none" }}
                   />
                   <FormControlLabel
                     value="low"
                     control={<Radio />}
                     label="Price - Low to High"
-                    style={{ "user-select": "none" }}
+                    style={{ "userSelect": "none" }}
                   />
                   <FormControlLabel
-                    value="High"
+                    value="high"
                     control={<Radio />}
                     label="Price - High to Low"
-                    style={{ "user-select": "none" }}
+                    style={{ "userSelect": "none" }}
                   />
                 </RadioGroup>
               </FormControl>
             </div>
-            <div className="sort">
+            <div 
+              className={`filter ${filter ? "expanded" : ""}`}
+              onClick={() => setFilter(!filter)}
+            >
               <header>
                 <h3>Filter by:</h3>
-                <AiOutlinePlus size={24} />
+                {!filter ? (
+                  <AiOutlinePlus size={24} />
+                ) : (
+                  <AiOutlineMinus size={24} />
+                )}
               </header>
+
+              <FormControl>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={filters.red}
+                        onChange={handleFilterChange}
+                        name="red"
+                      />
+                    }
+                    label="Red"
+                    style={{ userSelect: "none" }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={filters.white}
+                        onChange={handleFilterChange}
+                        name="white"
+                      />
+                    }
+                    label="White"
+                    style={{ userSelect: "none" }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={filters.sparkling}
+                        onChange={handleFilterChange}
+                        name="sparkling"
+                      />
+                    }
+                    label="Sparkling"
+                    style={{ userSelect: "none" }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={filters.rose}
+                        onChange={handleFilterChange}
+                        name="rose"
+                      />
+                    }
+                    label="Rose"
+                    style={{ userSelect: "none" }}
+                  />
+                </FormGroup>
+              </FormControl>
             </div>
           </aside>
           <article className="shop-main">
-            {mockwines.map((wine) => (
-              <WineCard wine={wine} />
+            {filteredAndSortedWines.map((wine) => (
+              <WineCard key={wine.id} wine={wine} />
             ))}
           </article>
         </section>
