@@ -39,26 +39,27 @@ const Shop = () => {
     });
   };
 
-  const applySorting = (mockwines) => {
+  const applySorting = (wines) => {
+    if (!sortOption) return wines;
     switch (sortOption) {
       case "ascending":
-        return mockwines.sort((a, b) => a.relevance - b.relevance);
+        return wines.sort((a, b) => a.relevance - b.relevance);
       case "descending":
-        return mockwines.sort((a, b) => b.relevance - a.relevance);
+        return wines.sort((a, b) => b.relevance - a.relevance);
       case "low":
-        return mockwines.sort((a, b) => a.price - b.price);
+        return wines.sort((a, b) => a.price - b.price);
       case "high":
-        return mockwines.sort((a, b) => b.price - a.price);
+        return wines.sort((a, b) => b.price - a.price);
       default:
-        return mockwines;
+        return wines;
     }
   };
 
-  const applyFilters = (mockwines) => {
+  const applyFilters = (wines) => {
     const activeFilters = Object.keys(filters).filter((key) => filters[key]);
-    if (activeFilters === 0) return mockwines;
-    return mockwines.filter((mockwines) =>
-      activeFilters.includes(mockwines.type)
+    if (activeFilters.length === 0) return wines;
+    return mockwines.filter((wine) =>
+      activeFilters.includes(wine.type)
     );
   };
 
@@ -96,7 +97,7 @@ const Shop = () => {
                   <AiOutlineMinus size={24} />
                 )}
               </header>
-              <FormControl>
+              <FormControl onClick={(event) => event.stopPropagation()}>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   value={sortOption}
@@ -144,7 +145,7 @@ const Shop = () => {
               </header>
 
               <FormControl>
-                <FormGroup>
+                <FormGroup onClick={(event) => event.stopPropagation()}>
                   <FormControlLabel
                     control={
                       <Checkbox 
@@ -194,9 +195,13 @@ const Shop = () => {
             </div>
           </aside>
           <article className="shop-main">
-            {filteredAndSortedWines.map((wine) => (
-              <WineCard key={wine.id} wine={wine} />
-            ))}
+            {filteredAndSortedWines.length > 0 ? (
+              filteredAndSortedWines.map((wine) => (
+                <WineCard key={wine.id} wine={wine} />
+              ))
+            ) : (
+              <p>No products found for the selected filters.</p>
+            )}
           </article>
         </section>
       </main>
