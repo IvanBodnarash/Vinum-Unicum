@@ -63,7 +63,6 @@
     .sort,
     .filter {
       overflow-y: hidden;
-      font-family: 'CaslonAntique', sans-serif;
       border-bottom: 1px solid lightgray;
       transition: height 0.3s ease;
       height: 50px;
@@ -89,10 +88,6 @@
   }
 }
 
-.sort-block {
-  font-family: 'CaslonAntique', sans-serif;
-}
-
 .shop-main {
   display: flex;
   flex: 1;
@@ -100,7 +95,7 @@
   margin-top: 1em;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .sample-card {
@@ -118,21 +113,16 @@
   margin-bottom: 1em;
   cursor: pointer;
   background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
-  transition: scale 0.2s ease-in-out;
+  transition: scale, 0.2s ease-in-out;
 
   h3 {
     font-size: 1.25em;
   }
 
   &:hover {
-    outline: auto;
+    // outline: auto;
     scale: 102%;
-    box-shadow: 1px 1px 5px gray;
-
-    h4,
-    h3 {
-      text-decoration: underline;
-    }
+    background-color: rgba(97, 97, 97, 0.312);
   }
 
   img {
@@ -192,4 +182,12 @@
 .shop-sort {
   display: flex;
   flex-direction: column;
+}
+
+.no-products-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 2em;
 }

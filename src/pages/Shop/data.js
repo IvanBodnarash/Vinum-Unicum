@@ -24,7 +24,7 @@ const mockwines = [
     type: "white",
     relevance: 85,
     imageLink:
-      "https://marketwines.ca/wp-content/uploads/2023/03/Marcel-Malbec.jpg",
+      "https://freshvinewine.com/content/productimage/1_CHARDONNAY_SLIDER-min.png",
     location: "Burgundy, France",
     description:
       "A crisp and elegant white wine with flavors of green apple and citrus.",
@@ -40,7 +40,7 @@ const mockwines = [
     type: "red",
     relevance: 90,
     imageLink:
-      "https://marketwines.ca/wp-content/uploads/2023/03/Double-Back-1.jpg",
+      "https://www.jeffersonvineyards.com/assets/images/products/pictures/OUTSHINERY-Jefferson-Merlot-2022.png",
     location: "Tuscany, Italy",
     description:
       "A smooth and velvety red wine with hints of plum and chocolate.",
@@ -56,7 +56,7 @@ const mockwines = [
     type: "red",
     relevance: 75,
     imageLink:
-      "https://marketwines.ca/wp-content/uploads/2023/01/Relmu-Cab.jpg",
+      "https://www.maset.com/cdnassets/products/red-wines/lg/bottle/pinot-noir-lg-1.png",
     location: "Oregon, USA",
     description:
       "An elegant and delicate red wine with flavors of cherry and earth.",
@@ -72,7 +72,7 @@ const mockwines = [
     type: "white",
     relevance: 80,
     imageLink:
-      "https://www.bswliquor.com/cdn/shop/products/the-duckhorn-portfolio-2020-duckhorn-vineyards-napa-valley-cabernet-sauvignon_900x.jpg?v=1678289399",
+      "https://www.sauvignonjohn.com/cdn/shop/products/image_65e4f397-1371-472c-a123-075ddd391ca0_1200x1200.png?v=1661873388",
     location: "Marlborough, New Zealand",
     description:
       "A vibrant and refreshing white wine with tropical fruit and herbal notes.",
@@ -83,15 +83,15 @@ const mockwines = [
   },
   {
     id: uuidv4(),
-    name: "Pinot Noir",
-    price: 35.75,
+    name: "Chateau Latour",
+    price: 84.75,
     type: "red",
     relevance: 95,
     imageLink:
-      "https://www.bswliquor.com/cdn/shop/files/12749-bouteille-chateau-latour-rouge--pauillac_919x_4a80b8f3-78a5-4b9c-8951-135b1176e945_3616x.png?v=1696829491",
-    location: "Oregon, USA",
+      "https://www.12bouteilles.com/10414-medium_default/chateau-latour-2008.jpg",
+    location: "Bordeaux, France",
     description:
-      "An elegant and delicate red wine with flavors of cherry and earth.",
+      "This wine is one of the most sought after and famous because it is produced from the best vineyards of Enclos, the incomparable historical terroir around Château Latour. Up to 4 grape varieties can be used in the composition of thisPauillac wine, Cabernet Sauvignon, Merlot, Cabernet Franc et Petit Verdot.",
     varietal: "Pinot Grigio",
     "Alcohol/Vol": "8%",
     size: "750ml",
@@ -99,13 +99,13 @@ const mockwines = [
   },
   {
     id: uuidv4(),
-    name: "Sauvignon Blanc",
+    name: "Amarone Della Valpolicella",
     price: 27.5,
-    type: "white",
+    type: "red",
     relevance: 80,
     imageLink:
-      "https://marketwines.ca/wp-content/uploads/2023/02/Quintorelli-Riserva-2003.jpg",
-    location: "Marlborough, New Zealand",
+      "https://astoriavinos.es/wp-content/uploads/2020/07/amarone-della-valpolicella-d-o-c-g-astoria-tinto.png",
+    location: "Valpolicella, Italy",
     description:
       "A vibrant and refreshing white wine with tropical fruit and herbal notes.",
     varietal: "Pinot Grigio",

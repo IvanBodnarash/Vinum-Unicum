@@ -17,6 +17,14 @@ import {
 import "../../styles/main-style.scss";
 import "../../styles/shop.scss";
 
+// TODO:
+// - Fonts
+// - Wrapping into separete components filters
+// - Adding Sections for sorting
+// - Changing wine card components
+// - Changing product page
+// - Adding data to wines data file
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -113,39 +121,39 @@ const Shop = () => {
                       <AiOutlineMinus size={24} />
                     )}
                   </header>
-                  <FormControl
-                    onClick={(event) => event.stopPropagation()}
-                    className="sort-block"
-                  >
+                  <FormControl onClick={(event) => event.stopPropagation()}>
                     <RadioGroup
                       aria-labelledby="demo-radio-buttons-group-label"
                       value={sortOption}
                       onChange={handleSortChange}
                       name="radio-buttons-group"
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontFamily: "CaslonAntique",
+                          fontSize: "1.2rem",
+                        },
+                      }}
                     >
                       <FormControlLabel
                         value="descending"
                         control={<RadioCustom />}
                         label="Relevance - Descending"
-                        // style={{ userSelect: "none" }}
+                        className="font-class"
                       />
                       <FormControlLabel
                         value="ascending"
                         control={<RadioCustom />}
                         label="Relevance - Ascending"
-                        // style={{ userSelect: "none" }}
                       />
                       <FormControlLabel
                         value="low"
                         control={<RadioCustom />}
                         label="Price - Low to High"
-                        // style={{ userSelect: "none" }}
                       />
                       <FormControlLabel
                         value="high"
                         control={<RadioCustom />}
                         label="Price - High to Low"
-                        // style={{ userSelect: "none" }}
                       />
                     </RadioGroup>
                   </FormControl>
@@ -164,7 +172,15 @@ const Shop = () => {
                   </header>
 
                   <FormControl>
-                    <FormGroup onClick={(event) => event.stopPropagation()}>
+                    <FormGroup
+                      onClick={(event) => event.stopPropagation()}
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontFamily: "CaslonAntique",
+                          fontSize: "1.2rem",
+                        },
+                      }}
+                    >
                       <FormControlLabel
                         control={
                           <CustomizedCheckbox
@@ -174,7 +190,6 @@ const Shop = () => {
                           />
                         }
                         label="Red"
-                        style={{ userSelect: "none" }}
                       />
                       <FormControlLabel
                         control={
@@ -185,7 +200,6 @@ const Shop = () => {
                           />
                         }
                         label="White"
-                        style={{ userSelect: "none" }}
                       />
                       <FormControlLabel
                         control={
@@ -196,7 +210,6 @@ const Shop = () => {
                           />
                         }
                         label="Sparkling"
-                        style={{ userSelect: "none" }}
                       />
                       <FormControlLabel
                         control={
@@ -207,7 +220,6 @@ const Shop = () => {
                           />
                         }
                         label="Rose"
-                        style={{ userSelect: "none" }}
                       />
                     </FormGroup>
                   </FormControl>
@@ -221,7 +233,7 @@ const Shop = () => {
                 <WineCard key={wine.id} wine={wine} />
               ))
             ) : (
-              <p>No products found for the selected filters.</p>
+              <div className="no-products-container">No products found for the selected filters.</div>
             )}
           </article>
         </main>
