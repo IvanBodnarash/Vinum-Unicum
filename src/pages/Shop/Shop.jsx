@@ -9,6 +9,8 @@ import WineCard from "../../components/wineCard/WineCard";
 import {
   FormControl,
   FormControlLabel,
+  MenuItem,
+  Select,
   RadioGroup,
   Radio,
   Checkbox,
@@ -51,6 +53,15 @@ const Shop = () => {
     sparkling: false,
     rose: false,
   });
+  const [age, setAge] = useState("sort");
+
+  // New sorting dropdown feature handler
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  // Sorting and filtering
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
@@ -143,7 +154,7 @@ const Shop = () => {
                       <FormControlLabel
                         value="ascending"
                         control={<RadioCustom />}
-                        label="Relevance - Ascending"
+                        label=">Relevance - Ascending"
                       />
                       <FormControlLabel
                         value="low"
@@ -227,13 +238,64 @@ const Shop = () => {
               </aside>
             </section>
           </div>
+
           <article className="shop-main">
+            <div>Wines Wines Wines Wines</div>
+
+            <div className="sort-dropdown-menu">
+              <span>Sort By:</span>
+
+              {/* TODO */}
+              {/* - change age to normal value */}
+              {/* - colors */}
+              {/* - resolve problem with scaling of entire page */}
+
+              <FormControl
+                sx={{
+                  width: "300px",
+                  border: "1px solid white",
+                  borderRadius: "4px",
+                }}
+              >
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  sx={{
+                    fontFamily: "CaslonAntique",
+                    color: "rgb(212, 212, 212)",
+                    border: "none", // Вилучаємо внутрішні рамки
+                    borderRadius: "4px", // Задаємо радіус для округлення країв
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "none", // Вилучаємо рамку outline
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      border: "none", // Вилучаємо рамку при фокусі
+                    },
+                    "& .MuiSelect-icon": {
+                      color: "rgb(212, 212, 212)", // Колір трикутничка
+                    },
+                  }}
+                >
+                  <MenuItem value="sort" disabled>
+                    Sort By
+                  </MenuItem>
+                  <MenuItem value="descending">Relevance - Descending</MenuItem>
+                  <MenuItem value="ascending">Relevance - Ascending</MenuItem>
+                  <MenuItem value="low">Price - Low to High</MenuItem>
+                  <MenuItem value="high">Price - High to Low</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
             {filteredAndSortedWines.length > 0 ? (
               filteredAndSortedWines.map((wine) => (
                 <WineCard key={wine.id} wine={wine} />
               ))
             ) : (
-              <div className="no-products-container">No products found for the selected filters.</div>
+              <div className="no-products-container">
+                No products found for the selected filters.
+              </div>
             )}
           </article>
         </main>

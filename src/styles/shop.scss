@@ -1,8 +1,9 @@
 .shop-wrapper {
   display: flex;
   position: relative;
-  padding: 6em 8%;
-  overflow: hidden;
+  padding: 6em 8%; 
+  // overflow: hidden;
+  overflow-x: hidden;
   font-family: 'CaslonAntique', sans-serif;
   color: rgb(212, 212, 212);
 
@@ -190,4 +191,14 @@
   align-items: center;
   width: 100%;
   font-size: 2em;
+}
+
+.sort-dropdown-menu {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  span {
+    margin-right: 15px;
+  }
 }
