@@ -1,31 +1,36 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   PiShoppingCartSimpleLight,
   PiShoppingCartSimpleFill,
 } from "react-icons/pi";
-import "../../styles/shopItem.scss";
+import "./ShopItem.scss";
 
 const ShopItem = () => {
   const [hover, setHover] = useState(false);
   const wine = JSON.parse(localStorage.getItem("selectedItem"));
 
   return (
-    <main className="main">
+    <div className="main">
       <header className="header">
         <div className="breadcrumb">
           <span>
-            <Link to={"/home"}>Home</Link>
+            <NavLink to="/">Home</NavLink>
           </span>
           <span>/</span>
-          <span>Shop</span>
+          <span>
+            <NavLink to={"/shop"}>Shop</NavLink>
+          </span>
           <span>/</span>
           <span>{wine.name}</span>
         </div>
       </header>
       <section className="wine-info">
         <aside>
-          <img src={wine.imageLink} alt="wine-selection" />
+          <img
+            src={`${wine.imageLink ? wine.imageLink : wine.imageUrl}`}
+            alt="wine-selection"
+          />
         </aside>
         <article>
           <h1>{wine.name}</h1>
@@ -60,7 +65,7 @@ const ShopItem = () => {
           </p>
         </article>
       </section>
-    </main>
+    </div>
   );
 };
 

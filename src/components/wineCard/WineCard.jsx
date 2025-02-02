@@ -6,7 +6,7 @@ import {
   PiShoppingCartSimpleFill,
 } from "react-icons/pi";
 
-import "../../styles/shop.scss";
+import "../../pages/Shop/Shop.scss";
 
 const WineCard = ({ wine }) => {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const WineCard = ({ wine }) => {
   const selectItem = (wine) => {
     localStorage.setItem("selectedItem", JSON.stringify(wine));
     navigate(`./${wine.id}`);
+    console.log(wine);
   };
 
   return (
