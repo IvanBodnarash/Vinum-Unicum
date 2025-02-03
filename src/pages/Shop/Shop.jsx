@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Parallax } from "react-scroll-parallax";
 
 import mockwines from "./data";
@@ -29,9 +29,11 @@ import "./Shop.scss";
 import { CustomizedCheckbox, RadioCustom } from "../../utils/muiConfig";
 
 const Shop = () => {
-  const [sort, setSort] = useState(false);
-  const [filter, setFilter] = useState(false);
-  const [price, setPrice] = useState(false);
+  const [openedFilter, setOpenedFilter] = useState({
+    sort: false,
+    filter: false,
+    price: false,
+  });
 
   const [sortOption, setSortOption] = useState("all");
   const [filters, setFilters] = useState({
@@ -40,7 +42,7 @@ const Shop = () => {
     sparkling: false,
     rose: false,
   });
-  const [priceRange, setPriceRange] = useState([0, 50000]);
+  const [priceRange, setPriceRange] = useState([10, 35000]);
   // const [age, setAge] = useState("sort");
 
   // useEffect(() => {
@@ -75,6 +77,21 @@ const Shop = () => {
     console.log(event.target.value);
   };
 
+  const handleFilterExpand = (someFilter) => {
+    if (someFilter === "sort") {
+      setOpenedFilter({ ...openedFilter, sort: !openedFilter.sort });
+    } else if (someFilter === "filter") {
+      setOpenedFilter({ ...openedFilter, filter: !openedFilter.filter });
+    } else if (someFilter === "price") {
+      setOpenedFilter({ ...openedFilter, price: !openedFilter.price });
+    }
+
+    console.log(openedFilter);
+    // setSortOption(event.target.value);
+    // setOpenedFilter({ ...openedFilter, sort: !openedFilter.someFilter });
+    // console.log(openedFilter);
+  };
+
   const handleFilterChange = (event) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -100,11 +117,39 @@ const Shop = () => {
 
   const applyFilters = (wines) => {
     const activeFilters = Object.keys(filters).filter((key) => filters[key]);
-    if (activeFilters.length === 0) return wines;
-    return mockwines.filter((wine) => activeFilters.includes(wine.type));
+
+    let filteredWines = wines;
+
+    if (activeFilters.length > 0) {
+      filteredWines = filteredWines.filter((wine) =>
+        activeFilters.includes(wine.type)
+      );
+    }
+
+    if (priceRange && priceRange.length === 2) {
+      filteredWines = filteredWines.filter(
+        (wine) => wine.price >= priceRange[0] && wine.price <= priceRange[1]
+      );
+    }
+
+    return filteredWines;
   };
 
   const filteredAndSortedWines = applySorting(applyFilters([...mockwines]));
+
+  const handlePriceChange = (event, newValue) => {
+    console.log("newValue:", newValue);
+    if (Array.isArray(newValue)) {
+      setPriceRange(newValue);
+    }
+  };
+
+  const sxStyle = {
+    "& .MuiTypography-root": {
+      fontFamily: "CaslonAntique",
+      fontSize: "1.2rem",
+    },
+  };
 
   return (
     <main className="shop-wrapper">
@@ -127,12 +172,13 @@ const Shop = () => {
         <section className="shop-container">
           <aside className="shop-aside">
             <div
-              className={`sort ${sort ? "expanded" : ""}`}
-              onClick={() => setSort(!sort)}
+              className={`sort ${openedFilter.sort ? "expanded" : ""}`}
+              // onClick={() => setSort(!sort)}
+              onClick={() => handleFilterExpand("sort")}
             >
               <header>
                 <h3>Sort by:</h3>
-                {!sort ? (
+                {!openedFilter.sort ? (
                   <AiOutlinePlus size={24} />
                 ) : (
                   <AiOutlineMinus size={24} />
@@ -176,12 +222,12 @@ const Shop = () => {
               </FormControl>
             </div>
             <div
-              className={`filter ${filter ? "expanded" : ""}`}
-              onClick={() => setFilter(!filter)}
+              className={`filter ${openedFilter.filter ? "expanded" : ""}`}
+              onClick={() => handleFilterExpand("filter")}
             >
               <header>
-                <h3>Filter by:</h3>
-                {!filter ? (
+                <h3>Type:</h3>
+                {!openedFilter.filter ? (
                   <AiOutlinePlus size={24} />
                 ) : (
                   <AiOutlineMinus size={24} />
@@ -190,12 +236,7 @@ const Shop = () => {
 
               <FormControl
                 onClick={(event) => event.stopPropagation()}
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "CaslonAntique",
-                    fontSize: "1.2rem",
-                  },
-                }}
+                sx={sxStyle}
               >
                 <FormGroup>
                   <FormControlLabel
@@ -242,12 +283,12 @@ const Shop = () => {
               </FormControl>
             </div>
             <div
-              className={`filter ${filter ? "expanded" : ""}`}
-              onClick={() => setFilter(!filter)}
+              className={`price ${openedFilter.price ? "expanded" : ""}`}
+              onClick={() => handleFilterExpand("price")}
             >
               <header>
                 <h3>Price:</h3>
-                {!filter ? (
+                {!openedFilter.price ? (
                   <AiOutlinePlus size={24} />
                 ) : (
                   <AiOutlineMinus size={24} />
@@ -256,55 +297,119 @@ const Shop = () => {
 
               <FormControl
                 onClick={(event) => event.stopPropagation()}
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "CaslonAntique",
-                    fontSize: "1.2rem",
-                  },
-                }}
+                sx={sxStyle}
               >
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.red}
-                        onChange={handleFilterChange}
-                        name="red"
-                      />
-                    }
-                    label="Red"
+                <Box sx={{ width: "260px", marginLeft: "15px" }}>
+                  <Slider
+                    // getAriaLabel={() => "Price range"}
+                    value={priceRange}
+                    onChange={handlePriceChange}
+                    valueLabelDisplay="auto"
+                    min={10}
+                    max={35000}
+                    // getAriaValueText={valuetext}
                   />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.white}
-                        onChange={handleFilterChange}
-                        name="white"
-                      />
-                    }
-                    label="White"
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "fit-content",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div className="price-range-display">
+                    <span>${priceRange[0] ? priceRange[0] : "0"}</span>
+                    <span>${priceRange[1] ? priceRange[1] : "0"}</span>
+                  </div>
+                  <form className="price-range-input-container">
+                    <input
+                      type="number"
+                      value={priceRange[0]}
+                      onChange={(e) =>
+                        setPriceRange([
+                          parseFloat(e.target.value),
+                          priceRange[1],
+                        ])
+                      }
+                    />
+                    <input
+                      type="number"
+                      value={priceRange[1]}
+                      onChange={(e) =>
+                        setPriceRange([
+                          priceRange[0],
+                          parseFloat(e.target.value),
+                        ])
+                      }
+                    />
+                  </form>
+                </Box>
+              </FormControl>
+            </div>
+            <div
+              className={`price ${openedFilter.price ? "expanded" : ""}`}
+              onClick={() => handleFilterExpand("price")}
+            >
+              <header>
+                <h3>Country:</h3>
+                {!openedFilter.price ? (
+                  <AiOutlinePlus size={24} />
+                ) : (
+                  <AiOutlineMinus size={24} />
+                )}
+              </header>
+
+              <FormControl
+                onClick={(event) => event.stopPropagation()}
+                sx={sxStyle}
+              >
+                <Box sx={{ width: "260px", marginLeft: "15px" }}>
+                  <Slider
+                    // getAriaLabel={() => "Price range"}
+                    value={priceRange}
+                    onChange={handlePriceChange}
+                    valueLabelDisplay="auto"
+                    min={10}
+                    max={35000}
+                    // getAriaValueText={valuetext}
                   />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.sparkling}
-                        onChange={handleFilterChange}
-                        name="sparkling"
-                      />
-                    }
-                    label="Sparkling"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.rose}
-                        onChange={handleFilterChange}
-                        name="rose"
-                      />
-                    }
-                    label="Rose"
-                  />
-                </FormGroup>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "fit-content",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div className="price-range-display">
+                    <span>${priceRange[0] ? priceRange[0] : "0"}</span>
+                    <span>${priceRange[1] ? priceRange[1] : "0"}</span>
+                  </div>
+                  <form className="price-range-input-container">
+                    <input
+                      type="number"
+                      value={priceRange[0]}
+                      onChange={(e) =>
+                        setPriceRange([
+                          parseFloat(e.target.value),
+                          priceRange[1],
+                        ])
+                      }
+                    />
+                    <input
+                      type="number"
+                      value={priceRange[1]}
+                      onChange={(e) =>
+                        setPriceRange([
+                          priceRange[0],
+                          parseFloat(e.target.value),
+                        ])
+                      }
+                    />
+                  </form>
+                </Box>
               </FormControl>
             </div>
           </aside>

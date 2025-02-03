@@ -9,7 +9,7 @@
   color: rgb(212, 212, 212);
 
   .control-block {
-    width: 23%;
+    width: 25%;
   }
 
   .background {
@@ -67,16 +67,18 @@
     flex-direction: column;
 
     .sort,
-    .filter {
+    .filter,
+    .price {
       overflow-y: hidden;
       border-bottom: 1px solid lightgray;
-      transition: height 0.3s ease;
-      height: 50px;
+      transition: max-height 0.3s ease;
+      max-height: 50px;
       transition: all 0.3s ease-in-out;
 
       &.expanded {
         padding-left: 10px;
-        height: 250px;
+        padding-bottom: 15px;
+        max-height: 300px;
       }
 
       header {
@@ -90,6 +92,23 @@
           font-size: 1.4em;
           user-select: none;
         }
+      }
+    }
+
+    .price-range-display,
+    .price-range-input-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.3em 0;
+      font-size: 1.2em;
+
+      input {
+        width: 30%;
+        height: 1.8em;
+        padding-left: 8px;
+        // text-align: center;
+        border-radius: 0.2em;
+        border: 1px solid lightgray;
       }
     }
   }
