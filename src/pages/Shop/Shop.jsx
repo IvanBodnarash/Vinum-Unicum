@@ -32,6 +32,7 @@ const Shop = () => {
   const [openedFilter, setOpenedFilter] = useState({
     sort: false,
     filter: false,
+    country: false,
     price: false,
   });
 
@@ -43,6 +44,15 @@ const Shop = () => {
     rose: false,
   });
   const [priceRange, setPriceRange] = useState([10, 35000]);
+  const [country, setCountry] = useState({
+    italy: false,
+    spain: false,
+    france: false,
+    portugal: false,
+    us: false,
+    nz: false,
+    other: false,
+  });
   // const [age, setAge] = useState("sort");
 
   // useEffect(() => {
@@ -84,6 +94,8 @@ const Shop = () => {
       setOpenedFilter({ ...openedFilter, filter: !openedFilter.filter });
     } else if (someFilter === "price") {
       setOpenedFilter({ ...openedFilter, price: !openedFilter.price });
+    } else if (someFilter === "country") {
+      setOpenedFilter({ ...openedFilter, country: !openedFilter.country });
     }
 
     console.log(openedFilter);
@@ -348,12 +360,12 @@ const Shop = () => {
               </FormControl>
             </div>
             <div
-              className={`price ${openedFilter.price ? "expanded" : ""}`}
-              onClick={() => handleFilterExpand("price")}
+              className={`country ${openedFilter.country ? "expanded" : ""}`}
+              onClick={() => handleFilterExpand("country")}
             >
               <header>
                 <h3>Country:</h3>
-                {!openedFilter.price ? (
+                {!openedFilter.country ? (
                   <AiOutlinePlus size={24} />
                 ) : (
                   <AiOutlineMinus size={24} />
@@ -364,52 +376,48 @@ const Shop = () => {
                 onClick={(event) => event.stopPropagation()}
                 sx={sxStyle}
               >
-                <Box sx={{ width: "260px", marginLeft: "15px" }}>
-                  <Slider
-                    // getAriaLabel={() => "Price range"}
-                    value={priceRange}
-                    onChange={handlePriceChange}
-                    valueLabelDisplay="auto"
-                    min={10}
-                    max={35000}
-                    // getAriaValueText={valuetext}
+                {/* <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <CustomizedCheckbox
+                        checked={filters.red}
+                        onChange={handleFilterChange}
+                        name="red"
+                      />
+                    }
+                    label="Red"
                   />
-                </Box>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    width: "fit-content",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div className="price-range-display">
-                    <span>${priceRange[0] ? priceRange[0] : "0"}</span>
-                    <span>${priceRange[1] ? priceRange[1] : "0"}</span>
-                  </div>
-                  <form className="price-range-input-container">
-                    <input
-                      type="number"
-                      value={priceRange[0]}
-                      onChange={(e) =>
-                        setPriceRange([
-                          parseFloat(e.target.value),
-                          priceRange[1],
-                        ])
-                      }
-                    />
-                    <input
-                      type="number"
-                      value={priceRange[1]}
-                      onChange={(e) =>
-                        setPriceRange([
-                          priceRange[0],
-                          parseFloat(e.target.value),
-                        ])
-                      }
-                    />
-                  </form>
-                </Box>
+                  <FormControlLabel
+                    control={
+                      <CustomizedCheckbox
+                        checked={filters.white}
+                        onChange={handleFilterChange}
+                        name="white"
+                      />
+                    }
+                    label="White"
+                  />
+                  <FormControlLabel
+                    control={
+                      <CustomizedCheckbox
+                        checked={filters.sparkling}
+                        onChange={handleFilterChange}
+                        name="sparkling"
+                      />
+                    }
+                    label="Sparkling"
+                  />
+                  <FormControlLabel
+                    control={
+                      <CustomizedCheckbox
+                        checked={filters.rose}
+                        onChange={handleFilterChange}
+                        name="rose"
+                      />
+                    }
+                    label="Rose"
+                  />
+                </FormGroup> */}
               </FormControl>
             </div>
           </aside>

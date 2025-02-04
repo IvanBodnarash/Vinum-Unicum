@@ -68,7 +68,8 @@
 
     .sort,
     .filter,
-    .price {
+    .price,
+    .country {
       overflow-y: hidden;
       border-bottom: 1px solid lightgray;
       transition: max-height 0.3s ease;
