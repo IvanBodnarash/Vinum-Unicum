@@ -13,7 +13,7 @@ const brandWinesData = {
     {
       id: uuidv4(),
       name: "Domaine Marcoux",
-      price: 199.85,
+      price: 1995.85,
       imageUrl:
         "https://images.vivino.com/thumbs/0mEtV7oIRBu5jVwu4QZabg_pb_600x600.png",
       location: "Rhône Valley, France",

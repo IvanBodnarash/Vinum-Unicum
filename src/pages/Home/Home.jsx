@@ -7,7 +7,6 @@ import "../../styles/main-style.scss";
 import "../../styles/animations.scss";
 
 import BrandsWineShop from "../../components/productCarousel/BrandsWineShop";
-import brandWinesData from "./brands";
 
 export default function Home() {
   return (
@@ -28,7 +27,6 @@ export default function Home() {
         <div className="wine-container" id="wine-carousel">
           <BrandsWineShop
             className="brands-component"
-            brandWinesData={brandWinesData}
           />
         </div>
       </Parallax>

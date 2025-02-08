@@ -4,14 +4,19 @@ import { useNavigate } from "react-router-dom";
 const BrandsWineItem = ({ wine }) => {
   const navigate = useNavigate();
 
-  function handleClick() {
+  function handleClick(e) {
+    console.log(e);
     localStorage.setItem("selectedItem", JSON.stringify(wine));
     navigate(`/shop/${wine.id}`);
-    // console.log(wine);
+  }
+
+  function mouseDown(e) {
+    e.preventDefault();
+    console.log(e);
   }
 
   return (
-    <div className="wine-item" onClick={handleClick}>
+    <div className="wine-item" onClick={handleClick} onMouseDown={mouseDown}>
       <div>
         <img className="wine-img" src={wine.imageUrl} alt={wine.name} />
       </div>

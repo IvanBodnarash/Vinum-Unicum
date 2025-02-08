@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import WineCarousel from "./BrandsWineCarousel";
 import CategoryMenu from "./CategoryMenu";
-// import brandWinesData from "../../pages/Home/brands";
 
-const BrandsWineShop = ({ brandWinesData }) => {
+import mockwines from "../../pages/Shop/data";
+
+const BrandsWineShop = ({ wines }) => {
   const [selectedCategory, setSelectedCategory] = useState("red");
+  const [displayedWines, setDisplayedWines] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const filteredWines = mockwines.filter(
+      (item) => item.isExclusive === true && item.type === "red"
+    );
+    setDisplayedWines(filteredWines);
+  }, []);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    const filteredWines = mockwines.filter(
+      (item) => item.isExclusive === true && item.type === category
+    );
+    setDisplayedWines(filteredWines);
   };
 
-  const categories = Object.keys(brandWinesData);
+  const categories = ["red", "white", "sparkling", "rose"];
 
   return (
     <div className="wine-brands-component">
@@ -22,12 +36,12 @@ const BrandsWineShop = ({ brandWinesData }) => {
       />
       <div className="wine-carousel-wrapper">
         <TransitionGroup>
-          <CSSTransition key={selectedCategory} timeout={1000} classNames="fade">
-            {/* <h2>{selectedCategory.toUpperCase()} Wines</h2> */}
-            <WineCarousel
-              className=""
-              wines={brandWinesData[selectedCategory]}
-            />
+          <CSSTransition
+            key={selectedCategory}
+            timeout={1000}
+            classNames="fade"
+          >
+            <WineCarousel className="" wines={displayedWines}/>
           </CSSTransition>
         </TransitionGroup>
       </div>

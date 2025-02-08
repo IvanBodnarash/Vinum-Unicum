@@ -37,11 +37,15 @@ const BrandsWineCarousel = ({ wines }) => {
     <div className="">
       <div>
         <div className="slider-carousel">
-          <Slider {...settings} className="wine-block">
-            {wines.map((wine, index) => (
-              <WineItem key={index} wine={wine} />
-            ))}
-          </Slider>
+          {wines.length > 0 ? (
+            <Slider {...settings} className="wine-block">
+              {wines.map((wine, index) => (
+                <WineItem key={index} wine={wine} />
+              ))}
+            </Slider>
+          ) : (
+            <p>No wines for display</p>
+          )}
         </div>
       </div>
     </div>

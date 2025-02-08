@@ -33,11 +33,13 @@ const WineCard = ({ wine }) => {
         )}
       </div>
 
-      <img className="wine-img" src={wine.imageLink} alt="wine-example" />
+      <img className="wine-img" src={wine.imageUrl} alt="wine-example" />
 
       <div className="info">
         <h3>{wine.name}</h3>
-        <h4>{wine.location}</h4>
+        <h4>{wine.country}</h4>
+        <h4>{wine.year}</h4>
+        <h4>{wine.grapeVariety}</h4>
         <span style={{ fontWeight: "bold" }}>${wine.price} CAD</span>
       </div>
 

@@ -27,6 +27,7 @@ import "./Shop.scss";
 // - Adding data to wines data file
 
 import { CustomizedCheckbox, RadioCustom } from "../../utils/muiConfig";
+import { capitalizeFirstLetter, toLowerCase } from "../../utils/utils";
 
 const Shop = () => {
   const [openedFilter, setOpenedFilter] = useState({
@@ -53,6 +54,11 @@ const Shop = () => {
     nz: false,
     other: false,
   });
+
+  // Object.entries(country).map(([key, value]) => {
+  //   console.log(`Key: ${key}, Value: ${value}`);
+  // });
+
   // const [age, setAge] = useState("sort");
 
   // useEffect(() => {
@@ -99,13 +105,17 @@ const Shop = () => {
     }
 
     console.log(openedFilter);
-    // setSortOption(event.target.value);
-    // setOpenedFilter({ ...openedFilter, sort: !openedFilter.someFilter });
-    // console.log(openedFilter);
   };
 
   const handleFilterChange = (event) => {
     setFilters((prevFilters) => ({
+      ...prevFilters,
+      [event.target.name]: event.target.checked,
+    }));
+  };
+
+  const handleCountryChange = (event) => {
+    setCountry((prevFilters) => ({
       ...prevFilters,
       [event.target.name]: event.target.checked,
     }));
@@ -129,6 +139,9 @@ const Shop = () => {
 
   const applyFilters = (wines) => {
     const activeFilters = Object.keys(filters).filter((key) => filters[key]);
+    const activeCountry = Object.keys(country).filter((key) => country[key]);
+
+    // console.log(activeCountry);
 
     let filteredWines = wines;
 
@@ -136,6 +149,12 @@ const Shop = () => {
       filteredWines = filteredWines.filter((wine) =>
         activeFilters.includes(wine.type)
       );
+    }
+
+    if (activeCountry.length > 0) {
+      filteredWines = filteredWines.filter((wine) => {
+        return activeCountry.includes(toLowerCase(wine.country));
+      });
     }
 
     if (priceRange && priceRange.length === 2) {
@@ -202,12 +221,7 @@ const Shop = () => {
                   value={sortOption}
                   onChange={handleSortChange}
                   name="radio-buttons-group"
-                  sx={{
-                    "& .MuiTypography-root": {
-                      fontFamily: "CaslonAntique",
-                      fontSize: "1.2rem",
-                    },
-                  }}
+                  sx={sxStyle}
                 >
                   <FormControlLabel
                     value="descending"
@@ -376,48 +390,21 @@ const Shop = () => {
                 onClick={(event) => event.stopPropagation()}
                 sx={sxStyle}
               >
-                {/* <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.red}
-                        onChange={handleFilterChange}
-                        name="red"
-                      />
-                    }
-                    label="Red"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.white}
-                        onChange={handleFilterChange}
-                        name="white"
-                      />
-                    }
-                    label="White"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.sparkling}
-                        onChange={handleFilterChange}
-                        name="sparkling"
-                      />
-                    }
-                    label="Sparkling"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.rose}
-                        onChange={handleFilterChange}
-                        name="rose"
-                      />
-                    }
-                    label="Rose"
-                  />
-                </FormGroup> */}
+                <FormGroup>
+                  {Object.entries(country).map(([key, value]) => (
+                    <FormControlLabel
+                      key={key}
+                      control={
+                        <CustomizedCheckbox
+                          checked={value}
+                          onChange={handleCountryChange}
+                          name={key}
+                        />
+                      }
+                      label={capitalizeFirstLetter(key)}
+                    />
+                  ))}
+                </FormGroup>
               </FormControl>
             </div>
           </aside>
@@ -425,12 +412,6 @@ const Shop = () => {
       </div>
 
       <article className="shop-main">
-        {/* <div>
-          <hr></hr>
-          Wines Wines Wines Wines
-          <hr></hr>
-        </div> */}
-
         <div className="sort-dropdown-menu">
           <span>Sort By:</span>
 
@@ -491,7 +472,7 @@ const Shop = () => {
                 },
                 "& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
                   {
-                    padding: "8px 15px", // Налаштування паддінгу для цього класу
+                    padding: "8px 15px",
                   },
               }}
             >
