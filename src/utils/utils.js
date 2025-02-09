@@ -9,7 +9,6 @@ export const capitalizeFirstLetter = (str) => {
 };
 
 export const toLowerCase = (str) => {
-  console.log(str);
   if (str === "USA") {
     return "us";
   }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Parallax } from "react-scroll-parallax";
 
-import mockwines from "./data";
+import mockwines from "../../data/data";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import WineCard from "../../components/wineCard/WineCard";
@@ -15,6 +15,8 @@ import {
   Box,
   Slider,
 } from "@mui/material";
+
+import { sxStyle } from "../../utils/muiConfig";
 import "../../styles/main-style.scss";
 import "./Shop.scss";
 
@@ -28,13 +30,15 @@ import "./Shop.scss";
 
 import { CustomizedCheckbox, RadioCustom } from "../../utils/muiConfig";
 import { capitalizeFirstLetter, toLowerCase } from "../../utils/utils";
+import { grapeVarietyMap } from "../../data/filtersMaps";
 
 const Shop = () => {
   const [openedFilter, setOpenedFilter] = useState({
     sort: false,
     filter: false,
-    country: false,
     price: false,
+    country: false,
+    grapeVariety: false,
   });
 
   const [sortOption, setSortOption] = useState("all");
@@ -54,10 +58,12 @@ const Shop = () => {
     nz: false,
     other: false,
   });
-
-  // Object.entries(country).map(([key, value]) => {
-  //   console.log(`Key: ${key}, Value: ${value}`);
-  // });
+  const [grapeVariety, setGrapeVariety] = useState(
+    Object.keys(grapeVarietyMap).reduce((acc, key) => {
+      acc[key] = false;
+      return acc;
+    }, {})
+  );
 
   // const [age, setAge] = useState("sort");
 
@@ -102,6 +108,11 @@ const Shop = () => {
       setOpenedFilter({ ...openedFilter, price: !openedFilter.price });
     } else if (someFilter === "country") {
       setOpenedFilter({ ...openedFilter, country: !openedFilter.country });
+    } else if (someFilter === "grapeVariety") {
+      setOpenedFilter({
+        ...openedFilter,
+        grapeVariety: !openedFilter.grapeVariety,
+      });
     }
 
     console.log(openedFilter);
@@ -116,6 +127,13 @@ const Shop = () => {
 
   const handleCountryChange = (event) => {
     setCountry((prevFilters) => ({
+      ...prevFilters,
+      [event.target.name]: event.target.checked,
+    }));
+  };
+
+  const handleGrapeVarietyChange = (event) => {
+    setGrapeVariety((prevFilters) => ({
       ...prevFilters,
       [event.target.name]: event.target.checked,
     }));
@@ -140,8 +158,9 @@ const Shop = () => {
   const applyFilters = (wines) => {
     const activeFilters = Object.keys(filters).filter((key) => filters[key]);
     const activeCountry = Object.keys(country).filter((key) => country[key]);
-
-    // console.log(activeCountry);
+    const activeVariety = Object.keys(grapeVariety).filter(
+      (key) => grapeVariety[key]
+    );
 
     let filteredWines = wines;
 
@@ -154,6 +173,14 @@ const Shop = () => {
     if (activeCountry.length > 0) {
       filteredWines = filteredWines.filter((wine) => {
         return activeCountry.includes(toLowerCase(wine.country));
+      });
+    }
+
+    if (activeVariety.length > 0) {
+      const selectedVarieties = activeVariety.map((key) => grapeVarietyMap[key]);
+
+      filteredWines = filteredWines.filter((wine) => {
+        return selectedVarieties.includes(wine.grapeVariety);
       });
     }
 
@@ -173,13 +200,6 @@ const Shop = () => {
     if (Array.isArray(newValue)) {
       setPriceRange(newValue);
     }
-  };
-
-  const sxStyle = {
-    "& .MuiTypography-root": {
-      fontFamily: "CaslonAntique",
-      fontSize: "1.2rem",
-    },
   };
 
   return (
@@ -204,7 +224,6 @@ const Shop = () => {
           <aside className="shop-aside">
             <div
               className={`sort ${openedFilter.sort ? "expanded" : ""}`}
-              // onClick={() => setSort(!sort)}
               onClick={() => handleFilterExpand("sort")}
             >
               <header>
@@ -265,46 +284,19 @@ const Shop = () => {
                 sx={sxStyle}
               >
                 <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.red}
-                        onChange={handleFilterChange}
-                        name="red"
-                      />
-                    }
-                    label="Red"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.white}
-                        onChange={handleFilterChange}
-                        name="white"
-                      />
-                    }
-                    label="White"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.sparkling}
-                        onChange={handleFilterChange}
-                        name="sparkling"
-                      />
-                    }
-                    label="Sparkling"
-                  />
-                  <FormControlLabel
-                    control={
-                      <CustomizedCheckbox
-                        checked={filters.rose}
-                        onChange={handleFilterChange}
-                        name="rose"
-                      />
-                    }
-                    label="Rose"
-                  />
+                  {Object.entries(filters).map(([key, value]) => (
+                    <FormControlLabel
+                      key={key}
+                      control={
+                        <CustomizedCheckbox
+                          checked={value}
+                          onChange={handleFilterChange}
+                          name={key}
+                        />
+                      }
+                      label={capitalizeFirstLetter(key)}
+                    />
+                  ))}
                 </FormGroup>
               </FormControl>
             </div>
@@ -402,6 +394,42 @@ const Shop = () => {
                         />
                       }
                       label={capitalizeFirstLetter(key)}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
+            </div>
+            <div
+              className={`grape-variety ${
+                openedFilter.grapeVariety ? "expanded" : ""
+              }`}
+              onClick={() => handleFilterExpand("grapeVariety")}
+            >
+              <header>
+                <h3>Grape Variety:</h3>
+                {!openedFilter.grapeVariety ? (
+                  <AiOutlinePlus size={24} />
+                ) : (
+                  <AiOutlineMinus size={24} />
+                )}
+              </header>
+
+              <FormControl
+                onClick={(event) => event.stopPropagation()}
+                sx={sxStyle}
+              >
+                <FormGroup>
+                  {Object.entries(grapeVariety).map(([key, value]) => (
+                    <FormControlLabel
+                      key={key}
+                      control={
+                        <CustomizedCheckbox
+                          checked={value}
+                          onChange={handleGrapeVarietyChange}
+                          name={key}
+                        />
+                      }
+                      label={grapeVarietyMap[key]}
                     />
                   ))}
                 </FormGroup>

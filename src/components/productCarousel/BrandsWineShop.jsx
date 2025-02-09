@@ -3,7 +3,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import WineCarousel from "./BrandsWineCarousel";
 import CategoryMenu from "./CategoryMenu";
 
-import mockwines from "../../pages/Shop/data";
+import mockwines from "../../data/data";
 
 const BrandsWineShop = ({ wines }) => {
   const [selectedCategory, setSelectedCategory] = useState("red");

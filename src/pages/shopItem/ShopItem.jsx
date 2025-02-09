@@ -28,7 +28,7 @@ const ShopItem = () => {
       <section className="wine-info">
         <aside>
           <img
-            src={`${wine.imageLink ? wine.imageLink : wine.imageUrl}`}
+            src={wine.imageUrl}
             alt="wine-selection"
           />
         </aside>

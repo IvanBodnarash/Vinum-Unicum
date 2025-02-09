@@ -8,6 +8,13 @@ export const theme = createTheme({
   },
 });
 
+export const sxStyle = {
+    "& .MuiTypography-root": {
+      fontFamily: "CaslonAntique",
+      fontSize: "1.2rem",
+    },
+  };
+
 export const CustomizedCheckbox = styled(Checkbox)(({ theme }) => ({
   color: theme.palette.primary.main,
 }));
