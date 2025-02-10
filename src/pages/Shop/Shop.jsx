@@ -16,7 +16,12 @@ import {
   Slider,
 } from "@mui/material";
 
-import { sxStyle } from "../../utils/muiConfig";
+import {
+  formControlSxStyle,
+  sortSelecMenuPropsSx,
+  sortSelectSxStyle,
+  sxStyle,
+} from "../../utils/muiConfig";
 import "../../styles/main-style.scss";
 import "./Shop.scss";
 
@@ -29,17 +34,15 @@ import "./Shop.scss";
 // - Adding data to wines data file
 
 import { CustomizedCheckbox, RadioCustom } from "../../utils/muiConfig";
-import { capitalizeFirstLetter, toLowerCase } from "../../utils/utils";
+import {
+  capitalizeFirstLetter,
+  mapCountryToFilterValue,
+  sortingOptions,
+} from "../../utils/utils";
 import { grapeVarietyMap } from "../../data/filtersMaps";
 
 const Shop = () => {
-  const [openedFilter, setOpenedFilter] = useState({
-    sort: false,
-    filter: false,
-    price: false,
-    country: false,
-    grapeVariety: false,
-  });
+  const [openedFilter, setOpenedFilter] = useState(null);
 
   const [sortOption, setSortOption] = useState("all");
   const [filters, setFilters] = useState({
@@ -100,40 +103,11 @@ const Shop = () => {
   };
 
   const handleFilterExpand = (someFilter) => {
-    if (someFilter === "sort") {
-      setOpenedFilter({ ...openedFilter, sort: !openedFilter.sort });
-    } else if (someFilter === "filter") {
-      setOpenedFilter({ ...openedFilter, filter: !openedFilter.filter });
-    } else if (someFilter === "price") {
-      setOpenedFilter({ ...openedFilter, price: !openedFilter.price });
-    } else if (someFilter === "country") {
-      setOpenedFilter({ ...openedFilter, country: !openedFilter.country });
-    } else if (someFilter === "grapeVariety") {
-      setOpenedFilter({
-        ...openedFilter,
-        grapeVariety: !openedFilter.grapeVariety,
-      });
-    }
-
-    console.log(openedFilter);
+    setOpenedFilter(openedFilter === someFilter ? null : someFilter);
   };
 
-  const handleFilterChange = (event) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [event.target.name]: event.target.checked,
-    }));
-  };
-
-  const handleCountryChange = (event) => {
-    setCountry((prevFilters) => ({
-      ...prevFilters,
-      [event.target.name]: event.target.checked,
-    }));
-  };
-
-  const handleGrapeVarietyChange = (event) => {
-    setGrapeVariety((prevFilters) => ({
+  const handleFilterUpdate = (setFilterState) => (event) => {
+    setFilterState((prevFilters) => ({
       ...prevFilters,
       [event.target.name]: event.target.checked,
     }));
@@ -161,6 +135,7 @@ const Shop = () => {
     const activeVariety = Object.keys(grapeVariety).filter(
       (key) => grapeVariety[key]
     );
+    const selectedVarieties = activeVariety.map((key) => grapeVarietyMap[key]);
 
     let filteredWines = wines;
 
@@ -172,13 +147,12 @@ const Shop = () => {
 
     if (activeCountry.length > 0) {
       filteredWines = filteredWines.filter((wine) => {
-        return activeCountry.includes(toLowerCase(wine.country));
+        return activeCountry.includes(mapCountryToFilterValue(wine.country));
       });
     }
 
     if (activeVariety.length > 0) {
-      const selectedVarieties = activeVariety.map((key) => grapeVarietyMap[key]);
-
+      // const selectedVarieties = activeVariety.map((key) => grapeVarietyMap[key]);
       filteredWines = filteredWines.filter((wine) => {
         return selectedVarieties.includes(wine.grapeVariety);
       });
@@ -223,15 +197,15 @@ const Shop = () => {
         <section className="shop-container">
           <aside className="shop-aside">
             <div
-              className={`sort ${openedFilter.sort ? "expanded" : ""}`}
+              className={`sort ${openedFilter === "sort" ? "expanded" : ""}`}
               onClick={() => handleFilterExpand("sort")}
             >
               <header>
                 <h3>Sort by:</h3>
-                {!openedFilter.sort ? (
-                  <AiOutlinePlus size={24} />
-                ) : (
+                {openedFilter === "sort" ? (
                   <AiOutlineMinus size={24} />
+                ) : (
+                  <AiOutlinePlus size={24} />
                 )}
               </header>
               <FormControl onClick={(event) => event.stopPropagation()}>
@@ -242,40 +216,28 @@ const Shop = () => {
                   name="radio-buttons-group"
                   sx={sxStyle}
                 >
-                  <FormControlLabel
-                    value="descending"
-                    control={<RadioCustom />}
-                    label="Relevance - Descending"
-                    className="font-class"
-                  />
-                  <FormControlLabel
-                    value="ascending"
-                    control={<RadioCustom />}
-                    label=">Relevance - Ascending"
-                  />
-                  <FormControlLabel
-                    value="low"
-                    control={<RadioCustom />}
-                    label="Price - Low to High"
-                  />
-                  <FormControlLabel
-                    value="high"
-                    control={<RadioCustom />}
-                    label="Price - High to Low"
-                  />
+                  {sortingOptions.map((item) => (
+                    <FormControlLabel
+                      value={item.value}
+                      control={<RadioCustom />}
+                      label={item.label}
+                    />
+                  ))}
                 </RadioGroup>
               </FormControl>
             </div>
             <div
-              className={`filter ${openedFilter.filter ? "expanded" : ""}`}
+              className={`filter ${
+                openedFilter === "filter" ? "expanded" : ""
+              }`}
               onClick={() => handleFilterExpand("filter")}
             >
               <header>
                 <h3>Type:</h3>
-                {!openedFilter.filter ? (
-                  <AiOutlinePlus size={24} />
-                ) : (
+                {openedFilter === "filter" ? (
                   <AiOutlineMinus size={24} />
+                ) : (
+                  <AiOutlinePlus size={24} />
                 )}
               </header>
 
@@ -290,7 +252,7 @@ const Shop = () => {
                       control={
                         <CustomizedCheckbox
                           checked={value}
-                          onChange={handleFilterChange}
+                          onChange={handleFilterUpdate(setFilters)}
                           name={key}
                         />
                       }
@@ -301,15 +263,15 @@ const Shop = () => {
               </FormControl>
             </div>
             <div
-              className={`price ${openedFilter.price ? "expanded" : ""}`}
+              className={`price ${openedFilter === "price" ? "expanded" : ""}`}
               onClick={() => handleFilterExpand("price")}
             >
               <header>
                 <h3>Price:</h3>
-                {!openedFilter.price ? (
-                  <AiOutlinePlus size={24} />
-                ) : (
+                {openedFilter === "price" ? (
                   <AiOutlineMinus size={24} />
+                ) : (
+                  <AiOutlinePlus size={24} />
                 )}
               </header>
 
@@ -366,15 +328,17 @@ const Shop = () => {
               </FormControl>
             </div>
             <div
-              className={`country ${openedFilter.country ? "expanded" : ""}`}
+              className={`country ${
+                openedFilter === "country" ? "expanded" : ""
+              }`}
               onClick={() => handleFilterExpand("country")}
             >
               <header>
                 <h3>Country:</h3>
-                {!openedFilter.country ? (
-                  <AiOutlinePlus size={24} />
-                ) : (
+                {openedFilter === "country" ? (
                   <AiOutlineMinus size={24} />
+                ) : (
+                  <AiOutlinePlus size={24} />
                 )}
               </header>
 
@@ -389,7 +353,7 @@ const Shop = () => {
                       control={
                         <CustomizedCheckbox
                           checked={value}
-                          onChange={handleCountryChange}
+                          onChange={handleFilterUpdate(setCountry)}
                           name={key}
                         />
                       }
@@ -401,16 +365,16 @@ const Shop = () => {
             </div>
             <div
               className={`grape-variety ${
-                openedFilter.grapeVariety ? "expanded" : ""
+                openedFilter === "grapeVariety" ? "expanded" : ""
               }`}
               onClick={() => handleFilterExpand("grapeVariety")}
             >
               <header>
                 <h3>Grape Variety:</h3>
-                {!openedFilter.grapeVariety ? (
-                  <AiOutlinePlus size={24} />
-                ) : (
+                {openedFilter === "grapeVariety" ? (
                   <AiOutlineMinus size={24} />
+                ) : (
+                  <AiOutlinePlus size={24} />
                 )}
               </header>
 
@@ -425,7 +389,7 @@ const Shop = () => {
                       control={
                         <CustomizedCheckbox
                           checked={value}
-                          onChange={handleGrapeVarietyChange}
+                          onChange={handleFilterUpdate(setGrapeVariety)}
                           name={key}
                         />
                       }
@@ -448,77 +412,20 @@ const Shop = () => {
           {/* - colors */}
           {/* - resolve problem with scaling of entire page */}
 
-          <FormControl
-            sx={{
-              width: "250px",
-              border: "1px solid white",
-              borderRadius: "4px",
-              "& .MuiSelect-root": {
-                transform: "none !important",
-              },
-              "& .MuiSelect-select": {
-                transform: "none !important",
-              },
-            }}
-          >
+          <FormControl sx={formControlSxStyle}>
             <Select
               value={sortOption}
               onChange={handleSortChange}
               displayEmpty
               // onOpen={handleMenuOpen}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    width: "250px",
-                    bgcolor: "rgba(20, 23, 36, 0.998)",
-                    "& .MuiMenuItem-root": {
-                      fontFamily: "CaslonAntique",
-                      fontSize: "20px",
-                      color: "rgb(212, 212, 212)",
-                      "&:hover": {
-                        bgcolor: "rgba(30, 35, 69, 0.8)",
-                      },
-                    },
-                  },
-                },
-                disableScrollLock: true,
-              }}
-              sx={{
-                fontFamily: "CaslonAntique",
-                fontSize: "20px",
-                color: "rgb(212, 212, 212)",
-                border: "none",
-                borderRadius: "4px",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "& .MuiSelect-icon": {
-                  color: "rgb(212, 212, 212)",
-                },
-                "& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
-                  {
-                    padding: "8px 15px",
-                  },
-              }}
+              MenuProps={sortSelecMenuPropsSx}
+              sx={sortSelectSxStyle}
             >
-              <MenuItem value="all" label="All Wines">
-                All Wines
-              </MenuItem>
-              <MenuItem value="descending" label="Relevance - Descending">
-                Relevance - Descending
-              </MenuItem>
-              <MenuItem value="ascending" label=">Relevance - Ascending">
-                Relevance - Ascending
-              </MenuItem>
-              <MenuItem value="low" label="Price - Low to High">
-                Price - Low to High
-              </MenuItem>
-              <MenuItem value="high" label="Price - High to Low">
-                Price - High to Low
-              </MenuItem>
+              {sortingOptions.map((item) => (
+                <MenuItem value={item.value} label={item.label}>
+                  {item.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>
