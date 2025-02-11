@@ -40,6 +40,7 @@ import {
   sortingOptions,
 } from "../../utils/utils";
 import { grapeVarietyMap } from "../../data/filtersMaps";
+import FilterCategoryCheckbox from "../../components/shop/FilterCategoryCheckbox";
 
 const Shop = () => {
   const [openedFilter, setOpenedFilter] = useState(null);
@@ -216,8 +217,9 @@ const Shop = () => {
                   name="radio-buttons-group"
                   sx={sxStyle}
                 >
-                  {sortingOptions.map((item) => (
+                  {sortingOptions.map((item, index) => (
                     <FormControlLabel
+                      key={index}
                       value={item.value}
                       control={<RadioCustom />}
                       label={item.label}
@@ -226,7 +228,7 @@ const Shop = () => {
                 </RadioGroup>
               </FormControl>
             </div>
-            <div
+            {/* <div
               className={`filter ${
                 openedFilter === "filter" ? "expanded" : ""
               }`}
@@ -261,7 +263,7 @@ const Shop = () => {
                   ))}
                 </FormGroup>
               </FormControl>
-            </div>
+            </div> */}
             <div
               className={`price ${openedFilter === "price" ? "expanded" : ""}`}
               onClick={() => handleFilterExpand("price")}
@@ -327,7 +329,7 @@ const Shop = () => {
                 </Box>
               </FormControl>
             </div>
-            <div
+            {/* <div
               className={`country ${
                 openedFilter === "country" ? "expanded" : ""
               }`}
@@ -362,8 +364,8 @@ const Shop = () => {
                   ))}
                 </FormGroup>
               </FormControl>
-            </div>
-            <div
+            </div> */}
+            {/* <div
               className={`grape-variety ${
                 openedFilter === "grapeVariety" ? "expanded" : ""
               }`}
@@ -398,7 +400,35 @@ const Shop = () => {
                   ))}
                 </FormGroup>
               </FormControl>
-            </div>
+            </div> */}
+            <FilterCategoryCheckbox
+              className="filter"
+              openedFilter={openedFilter}
+              filter="filter"
+              handleFilterExpand={handleFilterExpand}
+              handleFilterUpdate={handleFilterUpdate(setFilters)}
+              selectedFilterState={filters}
+              selectedFilterName="Type"
+            />
+            <FilterCategoryCheckbox
+              className="country"
+              openedFilter={openedFilter}
+              filter="country"
+              handleFilterExpand={handleFilterExpand}
+              handleFilterUpdate={handleFilterUpdate(setCountry)}
+              selectedFilterState={country}
+              selectedFilterName="Country"
+            />
+            <FilterCategoryCheckbox
+              className="grape-variety"
+              openedFilter={openedFilter}
+              filter="grapeVariety"
+              handleFilterExpand={handleFilterExpand}
+              handleFilterUpdate={handleFilterUpdate(setGrapeVariety)}
+              selectedFilterState={grapeVariety}
+              selectedFilterName="Grape Variety"
+              map={grapeVarietyMap}
+            />
           </aside>
         </section>
       </div>
@@ -421,8 +451,8 @@ const Shop = () => {
               MenuProps={sortSelecMenuPropsSx}
               sx={sortSelectSxStyle}
             >
-              {sortingOptions.map((item) => (
-                <MenuItem value={item.value} label={item.label}>
+              {sortingOptions.map((item, index) => (
+                <MenuItem key={index} value={item.value} label={item.label}>
                   {item.label}
                 </MenuItem>
               ))}
