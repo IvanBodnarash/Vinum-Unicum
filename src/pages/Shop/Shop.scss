@@ -70,7 +70,8 @@
     .filter,
     .price,
     .country,
-    .grape-variety {
+    .grape-variety,
+    .taste-category {
       overflow-y: hidden;
       border-bottom: 1px solid lightgray;
       transition: max-height 0.3s ease;

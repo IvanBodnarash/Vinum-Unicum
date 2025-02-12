@@ -11,9 +11,6 @@ import {
   MenuItem,
   Select,
   RadioGroup,
-  FormGroup,
-  Box,
-  Slider,
 } from "@mui/material";
 
 import {
@@ -33,14 +30,10 @@ import "./Shop.scss";
 // - Changing product page
 // - Adding data to wines data file
 
-import { CustomizedCheckbox, RadioCustom } from "../../utils/muiConfig";
-import {
-  capitalizeFirstLetter,
-  mapCountryToFilterValue,
-  sortingOptions,
-} from "../../utils/utils";
-import { grapeVarietyMap } from "../../data/filtersMaps";
-import FilterCategoryCheckbox from "../../components/shop/FilterCategoryCheckbox";
+import { RadioCustom } from "../../utils/muiConfig";
+import { mapCountryToFilterValue, sortingOptions } from "../../utils/utils";
+import { grapeVarietyMap, tasteCategoriesMap } from "../../data/filtersMaps";
+import FilterCategoryComponent from "../../components/shop/FilterCategoryComponent";
 
 const Shop = () => {
   const [openedFilter, setOpenedFilter] = useState(null);
@@ -62,11 +55,18 @@ const Shop = () => {
     nz: false,
     other: false,
   });
-  const [grapeVariety, setGrapeVariety] = useState(
-    Object.keys(grapeVarietyMap).reduce((acc, key) => {
+
+  const initializeMappingFilterState = (map) =>
+    Object.keys(map).reduce((acc, key) => {
       acc[key] = false;
       return acc;
-    }, {})
+    }, {});
+
+  const [grapeVariety, setGrapeVariety] = useState(
+    initializeMappingFilterState(grapeVarietyMap)
+  );
+  const [tasteCategory, setTasteCategory] = useState(
+    initializeMappingFilterState(tasteCategoriesMap)
   );
 
   // const [age, setAge] = useState("sort");
@@ -137,6 +137,12 @@ const Shop = () => {
       (key) => grapeVariety[key]
     );
     const selectedVarieties = activeVariety.map((key) => grapeVarietyMap[key]);
+    const activeTasteCategory = Object.keys(tasteCategory).filter(
+      (key) => tasteCategory[key]
+    );
+    const selectedTasteCategories = activeTasteCategory.map(
+      (key) => tasteCategoriesMap[key]
+    );
 
     let filteredWines = wines;
 
@@ -153,9 +159,14 @@ const Shop = () => {
     }
 
     if (activeVariety.length > 0) {
-      // const selectedVarieties = activeVariety.map((key) => grapeVarietyMap[key]);
       filteredWines = filteredWines.filter((wine) => {
         return selectedVarieties.includes(wine.grapeVariety);
+      });
+    }
+
+    if (activeTasteCategory.length > 0) {
+      filteredWines = filteredWines.filter((wine) => {
+        return selectedTasteCategories.includes(wine.tasteCategory);
       });
     }
 
@@ -264,7 +275,19 @@ const Shop = () => {
                 </FormGroup>
               </FormControl>
             </div> */}
-            <div
+            <FilterCategoryComponent
+              className="price"
+              openedFilter={openedFilter}
+              filter="price"
+              handleFilterExpand={handleFilterExpand}
+              priceRange={priceRange}
+              handlePriceChange={handlePriceChange}
+              setPriceRange={setPriceRange}
+              selectedFilterName="Price"
+              min={10}
+              max={35000}
+            />
+            {/* <div
               className={`price ${openedFilter === "price" ? "expanded" : ""}`}
               onClick={() => handleFilterExpand("price")}
             >
@@ -328,7 +351,7 @@ const Shop = () => {
                   </form>
                 </Box>
               </FormControl>
-            </div>
+            </div> */}
             {/* <div
               className={`country ${
                 openedFilter === "country" ? "expanded" : ""
@@ -401,7 +424,7 @@ const Shop = () => {
                 </FormGroup>
               </FormControl>
             </div> */}
-            <FilterCategoryCheckbox
+            <FilterCategoryComponent
               className="filter"
               openedFilter={openedFilter}
               filter="filter"
@@ -410,7 +433,7 @@ const Shop = () => {
               selectedFilterState={filters}
               selectedFilterName="Type"
             />
-            <FilterCategoryCheckbox
+            <FilterCategoryComponent
               className="country"
               openedFilter={openedFilter}
               filter="country"
@@ -419,7 +442,7 @@ const Shop = () => {
               selectedFilterState={country}
               selectedFilterName="Country"
             />
-            <FilterCategoryCheckbox
+            <FilterCategoryComponent
               className="grape-variety"
               openedFilter={openedFilter}
               filter="grapeVariety"
@@ -428,6 +451,16 @@ const Shop = () => {
               selectedFilterState={grapeVariety}
               selectedFilterName="Grape Variety"
               map={grapeVarietyMap}
+            />
+            <FilterCategoryComponent
+              className="taste-category"
+              openedFilter={openedFilter}
+              filter="tasteCategory"
+              handleFilterExpand={handleFilterExpand}
+              handleFilterUpdate={handleFilterUpdate(setTasteCategory)}
+              selectedFilterState={tasteCategory}
+              selectedFilterName="Taste Category"
+              map={tasteCategoriesMap}
             />
           </aside>
         </section>
