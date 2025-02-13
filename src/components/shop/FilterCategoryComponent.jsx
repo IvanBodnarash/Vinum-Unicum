@@ -92,7 +92,12 @@ export default function FilterCategoryComponent({
         </Box>
       </>
     );
-  } else if (filter === "grapeVariety" || filter === "tasteCategory") {
+  } else if (
+    filter === "grapeVariety" ||
+    filter === "tasteCategory" ||
+    filter === "foodPairing" ||
+    filter === "year"
+  ) {
     content = (
       <FormGroup>
         {Object.entries(selectedFilterState).map(([key, value]) => (

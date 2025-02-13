@@ -32,7 +32,7 @@ export const tasteCategoriesMap = {
   earthy: "Earthy",
 };
 
-export const foodPairingCategories = {
+export const foodPairingCategoriesMap = {
   cheese: "Cheese & Dairy",
   seafood: "Fish & Seafood",
   redMeat: "Red Meat",
@@ -41,4 +41,11 @@ export const foodPairingCategories = {
   vegetarian: "Vegetarian Dishes",
   spicy: "Spicy Food",
   desserts: "Desserts & Sweets",
+};
+
+export const yearCategories = {
+  recent: "2020 - Present (Recent Vintages)",
+  modern: "2010 - 2019 (Modern Classics)",
+  aged: "1990 - 2009 (Aged Wines)",
+  vintage: "Before 1990 (Rare & Vintage)",
 };

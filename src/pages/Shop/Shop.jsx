@@ -32,7 +32,12 @@ import "./Shop.scss";
 
 import { RadioCustom } from "../../utils/muiConfig";
 import { mapCountryToFilterValue, sortingOptions } from "../../utils/utils";
-import { grapeVarietyMap, tasteCategoriesMap } from "../../data/filtersMaps";
+import {
+  foodPairingCategoriesMap,
+  grapeVarietyMap,
+  tasteCategoriesMap,
+  yearCategories,
+} from "../../data/filtersMaps";
 import FilterCategoryComponent from "../../components/shop/FilterCategoryComponent";
 
 const Shop = () => {
@@ -55,7 +60,6 @@ const Shop = () => {
     nz: false,
     other: false,
   });
-
   const initializeMappingFilterState = (map) =>
     Object.keys(map).reduce((acc, key) => {
       acc[key] = false;
@@ -67,6 +71,12 @@ const Shop = () => {
   );
   const [tasteCategory, setTasteCategory] = useState(
     initializeMappingFilterState(tasteCategoriesMap)
+  );
+  const [foodPairing, setFoodPairing] = useState(
+    initializeMappingFilterState(foodPairingCategoriesMap)
+  );
+  const [year, setYear] = useState(
+    initializeMappingFilterState(yearCategories)
   );
 
   // const [age, setAge] = useState("sort");
@@ -143,6 +153,14 @@ const Shop = () => {
     const selectedTasteCategories = activeTasteCategory.map(
       (key) => tasteCategoriesMap[key]
     );
+    const activeFoodPairing = Object.keys(foodPairing).filter(
+      (key) => foodPairing[key]
+    );
+    const selectedFoodPairings = activeFoodPairing.map(
+      (key) => foodPairingCategoriesMap[key]
+    );
+    const activeYear = Object.keys(yearCategories).filter((key) => year[key]);
+    const selectedYears = activeFoodPairing.map((key) => yearCategories[key]);
 
     let filteredWines = wines;
 
@@ -167,6 +185,18 @@ const Shop = () => {
     if (activeTasteCategory.length > 0) {
       filteredWines = filteredWines.filter((wine) => {
         return selectedTasteCategories.includes(wine.tasteCategory);
+      });
+    }
+
+    if (activeFoodPairing.length > 0) {
+      filteredWines = filteredWines.filter((wine) => {
+        return selectedFoodPairings.includes(wine.foodPairing);
+      });
+    }
+
+    if (activeYear.length > 0) {
+      filteredWines = filteredWines.filter((wine) => {
+        return selectedYears.includes(wine.year);
       });
     }
 
@@ -461,6 +491,25 @@ const Shop = () => {
               selectedFilterState={tasteCategory}
               selectedFilterName="Taste Category"
               map={tasteCategoriesMap}
+            />
+            <FilterCategoryComponent
+              className="food-pairing"
+              openedFilter={openedFilter}
+              filter="foodPairing"
+              handleFilterExpand={handleFilterExpand}
+              handleFilterUpdate={handleFilterUpdate(setFoodPairing)}
+              selectedFilterState={foodPairing}
+              selectedFilterName="Food Pairing"
+              map={foodPairingCategoriesMap}
+            />
+            <FilterCategoryComponent
+              className="year"
+              openedFilter={openedFilter}
+              filter="year"
+              handleFilterExpand={handleFilterExpand}
+              handleFilterUpdate={handleFilterUpdate(setYear)}
+              selectedFilterState={country}
+              selectedFilterName="Country"
             />
           </aside>
         </section>

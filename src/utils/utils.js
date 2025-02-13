@@ -43,3 +43,4 @@ export const sortingOptions = [
     label: "Price - High to Low",
   },
 ];
+
