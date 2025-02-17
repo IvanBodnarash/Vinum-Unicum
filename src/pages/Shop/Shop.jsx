@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Parallax } from "react-scroll-parallax";
 
 import mockwines from "../../data/data";
@@ -36,9 +36,12 @@ import {
   foodPairingCategoriesMap,
   grapeVarietyMap,
   tasteCategoriesMap,
-  yearCategories,
+  yearCategoriesMap,
 } from "../../data/filtersMaps";
 import FilterCategoryComponent from "../../components/shop/FilterCategoryComponent";
+import { useSearch } from "../../context/SearchContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Shop = () => {
   const [openedFilter, setOpenedFilter] = useState(null);
@@ -76,35 +79,22 @@ const Shop = () => {
     initializeMappingFilterState(foodPairingCategoriesMap)
   );
   const [year, setYear] = useState(
-    initializeMappingFilterState(yearCategories)
+    initializeMappingFilterState(yearCategoriesMap)
   );
 
-  // const [age, setAge] = useState("sort");
+  const { state, dispatch } = useSearch();
+  const [inputValue, setInputValue] = useState(state.query);
 
-  // useEffect(() => {
-  //   // Відновити стилі при закритті меню
-  //   return () => {
-  //     document.body.style.paddingRight = "0 !important";
-  //     document.body.style.overflow = "visible !important";
-  //     const rootDiv = document.getElementById("root");
-  //     if (rootDiv) rootDiv.removeAttribute("aria-hidden");
-  //   };
-  // }, []);
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    dispatch({ type: "SET_QUERY", payload: value });
+  };
 
-  // New sorting dropdown feature handler
-
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  //   console.log(event.target.value);
-  // };
-
-  //
-  // const handleMenuOpen = () => {
-  //   document.body.style.paddingRight = "0px";
-  //   document.body.style.overflow = "visible";
-  //   const rootDiv = document.getElementById("root");
-  //   if (rootDiv) rootDiv.setAttribute("aria-hidden", "false");
-  // };
+  const handleSearchCancel = () => {
+    dispatch({ type: "RESET_QUERY" });
+    setInputValue("");
+  };
 
   // Sorting and filtering
 
@@ -159,8 +149,7 @@ const Shop = () => {
     const selectedFoodPairings = activeFoodPairing.map(
       (key) => foodPairingCategoriesMap[key]
     );
-    const activeYear = Object.keys(yearCategories).filter((key) => year[key]);
-    const selectedYears = activeFoodPairing.map((key) => yearCategories[key]);
+    const activeYear = Object.keys(year).filter((key) => year[key]);
 
     let filteredWines = wines;
 
@@ -196,7 +185,15 @@ const Shop = () => {
 
     if (activeYear.length > 0) {
       filteredWines = filteredWines.filter((wine) => {
-        return selectedYears.includes(wine.year);
+        const wineYear = wine.year;
+        return activeYear.some((category) => {
+          if (category === "recent") return wineYear >= 2020;
+          if (category === "modern")
+            return wineYear >= 2010 && wineYear <= 2019;
+          if (category === "aged") return wineYear >= 1990 && wineYear <= 2009;
+          if (category === "vintage") return wineYear < 1990;
+          return false;
+        });
       });
     }
 
@@ -205,6 +202,10 @@ const Shop = () => {
         (wine) => wine.price >= priceRange[0] && wine.price <= priceRange[1]
       );
     }
+
+    filteredWines = filteredWines.filter((wine) =>
+      wine.name.toLowerCase().includes(state.query.toLowerCase())
+    );
 
     return filteredWines;
   };
@@ -238,73 +239,15 @@ const Shop = () => {
 
         <section className="shop-container">
           <aside className="shop-aside">
-            <div
-              className={`sort ${openedFilter === "sort" ? "expanded" : ""}`}
-              onClick={() => handleFilterExpand("sort")}
-            >
-              <header>
-                <h3>Sort by:</h3>
-                {openedFilter === "sort" ? (
-                  <AiOutlineMinus size={24} />
-                ) : (
-                  <AiOutlinePlus size={24} />
-                )}
-              </header>
-              <FormControl onClick={(event) => event.stopPropagation()}>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  value={sortOption}
-                  onChange={handleSortChange}
-                  name="radio-buttons-group"
-                  sx={sxStyle}
-                >
-                  {sortingOptions.map((item, index) => (
-                    <FormControlLabel
-                      key={index}
-                      value={item.value}
-                      control={<RadioCustom />}
-                      label={item.label}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </div>
-            {/* <div
-              className={`filter ${
-                openedFilter === "filter" ? "expanded" : ""
-              }`}
-              onClick={() => handleFilterExpand("filter")}
-            >
-              <header>
-                <h3>Type:</h3>
-                {openedFilter === "filter" ? (
-                  <AiOutlineMinus size={24} />
-                ) : (
-                  <AiOutlinePlus size={24} />
-                )}
-              </header>
-
-              <FormControl
-                onClick={(event) => event.stopPropagation()}
-                sx={sxStyle}
-              >
-                <FormGroup>
-                  {Object.entries(filters).map(([key, value]) => (
-                    <FormControlLabel
-                      key={key}
-                      control={
-                        <CustomizedCheckbox
-                          checked={value}
-                          onChange={handleFilterUpdate(setFilters)}
-                          name={key}
-                        />
-                      }
-                      label={capitalizeFirstLetter(key)}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </div> */}
+            <FilterCategoryComponent
+              className="sort"
+              openedFilter={openedFilter}
+              filter="sort"
+              sortOption={sortOption}
+              handleSortChange={handleSortChange}
+              handleFilterExpand={handleFilterExpand}
+              selectedFilterName="Sort By"
+            />
             <FilterCategoryComponent
               className="price"
               openedFilter={openedFilter}
@@ -317,143 +260,6 @@ const Shop = () => {
               min={10}
               max={35000}
             />
-            {/* <div
-              className={`price ${openedFilter === "price" ? "expanded" : ""}`}
-              onClick={() => handleFilterExpand("price")}
-            >
-              <header>
-                <h3>Price:</h3>
-                {openedFilter === "price" ? (
-                  <AiOutlineMinus size={24} />
-                ) : (
-                  <AiOutlinePlus size={24} />
-                )}
-              </header>
-
-              <FormControl
-                onClick={(event) => event.stopPropagation()}
-                sx={sxStyle}
-              >
-                <Box sx={{ width: "260px", marginLeft: "15px" }}>
-                  <Slider
-                    // getAriaLabel={() => "Price range"}
-                    value={priceRange}
-                    onChange={handlePriceChange}
-                    valueLabelDisplay="auto"
-                    min={10}
-                    max={35000}
-                    // getAriaValueText={valuetext}
-                  />
-                </Box>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    width: "fit-content",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div className="price-range-display">
-                    <span>${priceRange[0] ? priceRange[0] : "0"}</span>
-                    <span>${priceRange[1] ? priceRange[1] : "0"}</span>
-                  </div>
-                  <form className="price-range-input-container">
-                    <input
-                      type="number"
-                      value={priceRange[0]}
-                      onChange={(e) =>
-                        setPriceRange([
-                          parseFloat(e.target.value),
-                          priceRange[1],
-                        ])
-                      }
-                    />
-                    <input
-                      type="number"
-                      value={priceRange[1]}
-                      onChange={(e) =>
-                        setPriceRange([
-                          priceRange[0],
-                          parseFloat(e.target.value),
-                        ])
-                      }
-                    />
-                  </form>
-                </Box>
-              </FormControl>
-            </div> */}
-            {/* <div
-              className={`country ${
-                openedFilter === "country" ? "expanded" : ""
-              }`}
-              onClick={() => handleFilterExpand("country")}
-            >
-              <header>
-                <h3>Country:</h3>
-                {openedFilter === "country" ? (
-                  <AiOutlineMinus size={24} />
-                ) : (
-                  <AiOutlinePlus size={24} />
-                )}
-              </header>
-
-              <FormControl
-                onClick={(event) => event.stopPropagation()}
-                sx={sxStyle}
-              >
-                <FormGroup>
-                  {Object.entries(country).map(([key, value]) => (
-                    <FormControlLabel
-                      key={key}
-                      control={
-                        <CustomizedCheckbox
-                          checked={value}
-                          onChange={handleFilterUpdate(setCountry)}
-                          name={key}
-                        />
-                      }
-                      label={capitalizeFirstLetter(key)}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </div> */}
-            {/* <div
-              className={`grape-variety ${
-                openedFilter === "grapeVariety" ? "expanded" : ""
-              }`}
-              onClick={() => handleFilterExpand("grapeVariety")}
-            >
-              <header>
-                <h3>Grape Variety:</h3>
-                {openedFilter === "grapeVariety" ? (
-                  <AiOutlineMinus size={24} />
-                ) : (
-                  <AiOutlinePlus size={24} />
-                )}
-              </header>
-
-              <FormControl
-                onClick={(event) => event.stopPropagation()}
-                sx={sxStyle}
-              >
-                <FormGroup>
-                  {Object.entries(grapeVariety).map(([key, value]) => (
-                    <FormControlLabel
-                      key={key}
-                      control={
-                        <CustomizedCheckbox
-                          checked={value}
-                          onChange={handleFilterUpdate(setGrapeVariety)}
-                          name={key}
-                        />
-                      }
-                      label={grapeVarietyMap[key]}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </div> */}
             <FilterCategoryComponent
               className="filter"
               openedFilter={openedFilter}
@@ -508,38 +314,58 @@ const Shop = () => {
               filter="year"
               handleFilterExpand={handleFilterExpand}
               handleFilterUpdate={handleFilterUpdate(setYear)}
-              selectedFilterState={country}
-              selectedFilterName="Country"
+              selectedFilterState={year}
+              selectedFilterName="Harvesting Year"
+              map={yearCategoriesMap}
             />
           </aside>
         </section>
       </div>
 
       <article className="shop-main">
-        <div className="sort-dropdown-menu">
-          <span>Sort By:</span>
+        <div className="sort-search-container">
+          <div className="sort-dropdown-menu">
+            <span>Sort By:</span>
 
-          {/* TODO */}
-          {/* - change age to normal value */}
-          {/* - colors */}
-          {/* - resolve problem with scaling of entire page */}
+            {/* TODO */}
+            {/* - change age to normal value */}
+            {/* - colors */}
+            {/* - resolve problem with scaling of entire page */}
 
-          <FormControl sx={formControlSxStyle}>
-            <Select
-              value={sortOption}
-              onChange={handleSortChange}
-              displayEmpty
-              // onOpen={handleMenuOpen}
-              MenuProps={sortSelecMenuPropsSx}
-              sx={sortSelectSxStyle}
-            >
-              {sortingOptions.map((item, index) => (
-                <MenuItem key={index} value={item.value} label={item.label}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            <FormControl sx={formControlSxStyle}>
+              <Select
+                value={sortOption}
+                onChange={handleSortChange}
+                displayEmpty
+                // onOpen={handleMenuOpen}
+                MenuProps={sortSelecMenuPropsSx}
+                sx={sortSelectSxStyle}
+              >
+                {sortingOptions.map((item, index) => (
+                  <MenuItem key={index} value={item.value} label={item.label}>
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="search-section">
+            <span>Search</span>
+            <input
+              type="text"
+              placeholder="Search"
+              value={inputValue}
+              onChange={handleSearch}
+              autoComplete="off"
+            />
+            <button onClick={handleSearchCancel}>
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </div>
+
+        <div className="search-request">
+          {state.query && <p>Results for "{state.query}"</p>}
         </div>
 
         {filteredAndSortedWines.length > 0 ? (

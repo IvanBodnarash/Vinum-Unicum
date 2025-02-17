@@ -1,14 +1,73 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useSearch } from "../context/SearchContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faCartPlus,
+  faUser,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 import logo from "../img/logo-white.png";
+import "./Header.scss";
+import { createPortal } from "react-dom";
 
 export default function Header() {
+  const { state, dispatch } = useSearch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [inputValue, setInputValue] = useState(state.query);
+
+  useEffect(() => {
+    if (location.pathname == "/shop") {
+      setIsSearchVisible(false);
+      setInputValue("");
+    }
+  }, [location]);
+
+  const toggleSearch = () => {
+    if (location.pathname !== "/shop") {
+      setIsSearchVisible((prev) => !prev);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    dispatch({ type: "SET_QUERY", payload: value });
+  };
+
+  const handleSearchSubmit = () => {
+    if (inputValue.trim()) {
+      dispatch({ type: "SET_QUERY", payload: inputValue });
+      navigate("/shop");
+      setIsSearchVisible(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchSubmit();
+    }
+    if (e.key === "Escape") {
+      handleSearchCancel();
+    }
+  };
+
+  const handleSearchCancel = () => {
+    dispatch({ type: "RESET_QUERY" });
+    setInputValue("");
+    setIsSearchVisible(false);
+  };
+
+  const handleSearchReset = () => {
+    dispatch({ type: "RESET_QUERY" });
+    setInputValue("");
+  };
+
   return (
     <header>
       <div className="header-wrapper">
@@ -59,9 +118,33 @@ export default function Header() {
             >
               Contact
             </NavLink>
-            <span className="nav-item">
+            <span className="nav-item" onClick={toggleSearch}>
               <FontAwesomeIcon icon={faSearch} />
             </span>
+            {isSearchVisible &&
+              createPortal(
+                <>
+                  <div
+                    className="overlay visible"
+                    onClick={handleSearchCancel}
+                  ></div>
+                  <div className="search-container open">
+                    <input
+                      type="text"
+                      placeholder="Search wines..."
+                      value={inputValue}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyPress}
+                      autoFocus
+                    />
+                    <button onClick={handleSearchReset}>
+                      <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                    <button onClick={handleSearchSubmit}>Search</button>
+                  </div>
+                </>,
+                document.body
+              )}
             <span className="nav-item">
               <FontAwesomeIcon icon={faCartPlus} />
             </span>

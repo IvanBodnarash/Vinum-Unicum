@@ -2,13 +2,17 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  RadioGroup,
   Slider,
   Box,
 } from "@mui/material";
-import { CustomizedCheckbox } from "../../utils/muiConfig";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { sxStyle } from "../../utils/muiConfig";
-import { capitalizeFirstLetter } from "../../utils/utils";
+import {
+  sxStyle,
+  RadioCustom,
+  CustomizedCheckbox,
+} from "../../utils/muiConfig";
+import { capitalizeFirstLetter, sortingOptions } from "../../utils/utils";
 
 export default function FilterCategoryComponent({
   className,
@@ -23,10 +27,10 @@ export default function FilterCategoryComponent({
   max,
   setPriceRange,
   filter,
+  sortOption,
+  handleSortChange,
   map,
 }) {
-  console.log(openedFilter);
-
   let content;
 
   if (filter === "filter" || filter === "country") {
@@ -114,6 +118,25 @@ export default function FilterCategoryComponent({
           />
         ))}
       </FormGroup>
+    );
+  } else if (filter === "sort") {
+    content = (
+      <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        value={sortOption}
+        onChange={handleSortChange}
+        name="radio-buttons-group"
+        sx={sxStyle}
+      >
+        {sortingOptions.map((item, index) => (
+          <FormControlLabel
+            key={index}
+            value={item.value}
+            control={<RadioCustom />}
+            label={item.label}
+          />
+        ))}
+      </RadioGroup>
     );
   }
 

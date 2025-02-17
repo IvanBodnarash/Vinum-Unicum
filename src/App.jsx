@@ -9,6 +9,7 @@ import Discover from "./pages/Discover/Discover";
 import AboutUs from "./pages/AboutUs/About Us";
 import Contact from "./pages/Contact/Contact";
 import ShopRootLayout from "./components/Layouts/ShopRootLayout";
+import { SearchProvider } from "./context/SearchContext";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +34,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ParallaxProvider>
-      <div className="main-wrapper">
-        <RouterProvider router={router} />
-      </div>
-    </ParallaxProvider>
+    <SearchProvider>
+      <ParallaxProvider>
+        <div className="main-wrapper">
+          <RouterProvider router={router} />
+        </div>
+      </ParallaxProvider>
+    </SearchProvider>
   );
 }
 

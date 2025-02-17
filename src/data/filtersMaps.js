@@ -43,7 +43,7 @@ export const foodPairingCategoriesMap = {
   desserts: "Desserts & Sweets",
 };
 
-export const yearCategories = {
+export const yearCategoriesMap = {
   recent: "2020 - Present (Recent Vintages)",
   modern: "2010 - 2019 (Modern Classics)",
   aged: "1990 - 2009 (Aged Wines)",
