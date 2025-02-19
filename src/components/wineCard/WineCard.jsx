@@ -5,6 +5,9 @@ import {
   PiShoppingCartSimpleLight,
   PiShoppingCartSimpleFill,
 } from "react-icons/pi";
+import { BiWorld } from "react-icons/bi";
+import { GiSandsOfTime } from "react-icons/gi";
+import { LuGrape } from "react-icons/lu";
 
 import "../../pages/Shop/Shop.scss";
 
@@ -19,30 +22,42 @@ const WineCard = ({ wine }) => {
   };
 
   return (
-    <div className="sample-card" onClick={() => selectItem(wine)}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-          setSaved(!saved);
-        }}
-      >
-        {!saved ? (
-          <GoHeart size={24} className="heart" />
-        ) : (
-          <GoHeartFill size={24} className="heart" />
-        )}
+    <div className="wine-card">
+      <div className="sample-card" onClick={() => selectItem(wine)}>
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setSaved(!saved);
+          }}
+        >
+          {!saved ? (
+            <GoHeart size={24} className="heart" />
+          ) : (
+            <GoHeartFill size={24} className="heart" />
+          )}
+        </div>
+
+        <img className="wine-img" src={wine.imageUrl} alt="wine-example" />
+
+        <div className="info">
+          <h3>{wine.name}</h3>
+          <div className="info-container">
+            <h4>
+              <BiWorld size={20} className="icon" />
+              {wine.country}
+            </h4>
+            <h4>
+              <GiSandsOfTime size={20} className="icon" />
+              {wine.year}
+            </h4>
+            <h4>
+              <LuGrape size={20} className="icon" />
+              {wine.grapeVariety}
+            </h4>
+          </div>
+          <span style={{ fontWeight: "bold" }}>${wine.price} USD</span>
+        </div>
       </div>
-
-      <img className="wine-img" src={wine.imageUrl} alt="wine-example" />
-
-      <div className="info">
-        <h3>{wine.name}</h3>
-        <h4>{wine.country}</h4>
-        <h4>{wine.year}</h4>
-        <h4>{wine.grapeVariety}</h4>
-        <span style={{ fontWeight: "bold" }}>${wine.price} CAD</span>
-      </div>
-
       <div className="add-container">
         <input type="number" min="1" defaultValue="1" />
         <button
