@@ -1,11 +1,11 @@
 .shop-wrapper {
   display: flex;
   position: relative;
-  padding: 6em 8%; 
+  padding: 6em 8%;
   min-height: 100vh;
   // overflow: hidden;
   overflow-x: hidden;
-  font-family: 'CaslonAntique', sans-serif;
+  font-family: "CaslonAntique", sans-serif;
   color: rgb(212, 212, 212);
 
   .control-block {
@@ -38,7 +38,7 @@
     .breadcrumb {
       display: flex;
       gap: 0.5em;
-      font-size: 1.70em;
+      font-size: 1.7em;
     }
 
     h1 {
@@ -157,16 +157,16 @@
   span {
     font-size: 24px;
   }
-  
+
   input {
     flex: 1;
     width: 250px;
-    font-size: 20px;  
+    font-size: 20px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid lightgray;
   }
-  
+
   button {
     display: flex;
     background-color: transparent;
@@ -188,7 +188,11 @@
   align-items: center;
   width: 230px;
   padding: 1em;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 50%);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0) 50%
+  );
   transition: scale, 0.2s ease-in-out;
 
   &:hover {
@@ -239,11 +243,11 @@
     text-align: center;
     margin-bottom: 1em;
     cursor: pointer;
-  
+
     h3 {
       font-size: 1.25em;
     }
-  
+
     img {
       // width: 15.625em;
       height: 15.625em;
@@ -251,33 +255,51 @@
       object-position: center;
       border-radius: 0.5em;
     }
-  
+
     .info {
       display: flex;
       flex-direction: column;
+      // justify-content: center;
+      align-items: start;
       // height: 130px;
 
-    .info-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: start;
-    }
+      .info-container {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: start;
+        gap: 0.4em;
+
+        h4 {
+          display: flex;
+
+          gap: 0.5em;
+          font-size: 18px;
+          color: rgb(184, 184, 184);
+          // justify-content: center;
+          // align-items: center;
+        }
+      }
 
       h3 {
-        display: flex;
-        width: 180px;
-        height: 50px;
+        height: 55px;
+        text-align: left;
+        font-size: 24px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-width: 120px;
       }
-      
-      h4 {
-        display: flex;
-        gap: 0.5em;
-        justify-content: center;
-        align-items: center;
+
+      span {
+        margin-top: 15px;
+        font-size: 20px;
+        color: rgb(184, 184, 184);
       }
     }
-  
+
     .heart {
       position: absolute;
       right: 1em;

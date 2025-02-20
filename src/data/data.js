@@ -615,7 +615,7 @@ const mockwines = [
     location: "Tuscany",
     description:
       "An iconic Super Tuscan with rich tannins and vibrant red fruit.",
-    grapeVariety: "Sangiovese, Cabernet Sauvignon",
+    grapeVariety: "Cabernet Sauvignon",
     tasteCategory: "Dry",
     foodPairing: "Pasta & Grains",
     year: 2019,
