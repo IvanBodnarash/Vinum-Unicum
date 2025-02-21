@@ -10,6 +10,8 @@ import AboutUs from "./pages/AboutUs/About Us";
 import Contact from "./pages/Contact/Contact";
 import ShopRootLayout from "./components/Layouts/ShopRootLayout";
 import { SearchProvider } from "./context/SearchContext";
+import { CartProvider } from "./context/CartContext";
+import Favorites from "./pages/Favorites/Favorites";
 
 const router = createBrowserRouter([
   {
@@ -28,19 +30,22 @@ const router = createBrowserRouter([
       { path: "discover", element: <Discover /> },
       { path: "aboutUs", element: <AboutUs /> },
       { path: "contact", element: <Contact /> },
+      { path: "favorites", element: <Favorites /> },
     ],
   },
 ]);
 
 function App() {
   return (
-    <SearchProvider>
-      <ParallaxProvider>
-        <div className="main-wrapper">
-          <RouterProvider router={router} />
-        </div>
-      </ParallaxProvider>
-    </SearchProvider>
+    <CartProvider>
+      <SearchProvider>
+        <ParallaxProvider>
+          <div className="main-wrapper">
+            <RouterProvider router={router} />
+          </div>
+        </ParallaxProvider>
+      </SearchProvider>
+    </CartProvider>
   );
 }
 

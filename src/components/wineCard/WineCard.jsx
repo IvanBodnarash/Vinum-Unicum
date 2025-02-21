@@ -10,21 +10,41 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { LuGrape } from "react-icons/lu";
 
 import "../../pages/Shop/Shop.scss";
+import { useCart } from "../../context/CartContext";
 
 const WineCard = ({ wine }) => {
   const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
   const [hover, setHover] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const selectItem = (wine) => {
     localStorage.setItem("selectedItem", JSON.stringify(wine));
     navigate(`./${wine.id}`);
     console.log(wine);
   };
 
+  const { state, dispatch } = useCart();
+
+  // const isFavorite = state.favorite.some((fav) => fav.id === wine.id);
+  // const isInCart = state.cart.some((item) => item.id === wine.id);
+
+  const handleQuantityChange = (e) => {
+    const value = Math.max(1, parseInt(e.target.value, 10) || 1);
+    setQuantity(value);
+  };
+
+  const addToCartHandler = () => {
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: { ...wine, quantity },
+    });
+  };
+
   return (
     <div className="wine-card">
       <div className="sample-card" onClick={() => selectItem(wine)}>
         <div
+          className="favorites"
           onClick={(e) => {
             e.stopPropagation();
             setSaved(!saved);
@@ -59,7 +79,12 @@ const WineCard = ({ wine }) => {
         </div>
       </div>
       <div className="add-container">
-        <input type="number" min="1" defaultValue="1" />
+        <input
+          type="number"
+          min="1"
+          value={quantity}
+          onChange={handleQuantityChange}
+        />
         <button
           onMouseEnter={() => {
             setHover(true);
@@ -67,13 +92,13 @@ const WineCard = ({ wine }) => {
           onMouseLeave={() => {
             setHover(false);
           }}
+          onClick={addToCartHandler}
         >
           {!hover ? (
             <PiShoppingCartSimpleLight />
           ) : (
             <PiShoppingCartSimpleFill />
           )}
-          Add
         </button>
       </div>
     </div>

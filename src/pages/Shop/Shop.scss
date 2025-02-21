@@ -300,13 +300,18 @@
       }
     }
 
-    .heart {
-      position: absolute;
-      right: 1em;
-      top: 1em;
-      color: red;
-      cursor: pointer;
+    .favorites {
+      // position: relative;
+      // position: absolute;
+      // right: 0;
+      // top: 0;
+
+      .heart {
+        color: red;
+        cursor: pointer;
+      }
     }
+
   }
 }
 

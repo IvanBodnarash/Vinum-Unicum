@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSearch } from "../context/SearchContext";
+import { useCart } from "../context/CartContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +9,7 @@ import {
   faCartPlus,
   faUser,
   faXmark,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "../img/logo-white.png";
@@ -15,14 +17,18 @@ import "./Header.scss";
 import { createPortal } from "react-dom";
 
 export default function Header() {
-  const { state, dispatch } = useSearch();
+  const { state: searchState, dispatch } = useSearch();
+  const { state: cartState } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [inputValue, setInputValue] = useState(state.query);
+  const [inputValue, setInputValue] = useState(searchState.query);
+
+  const cartCount = cartState.cart.length;
+  const favoritesCount = cartState.favorites.length;
 
   useEffect(() => {
-    if (location.pathname == "/shop") {
+    if (location.pathname === "/shop") {
       setIsSearchVisible(false);
       setInputValue("");
     }
@@ -145,9 +151,16 @@ export default function Header() {
                 </>,
                 document.body
               )}
-            <span className="nav-item">
+            <span className="nav-item icon-badge">
               <FontAwesomeIcon icon={faCartPlus} />
+              {cartCount > 0 && <span className="badge">{cartCount}</span>}
             </span>
+            <NavLink to="/favorites" className="nav-item icon-badge">
+              <FontAwesomeIcon icon={faHeart} />
+              {favoritesCount > 0 && (
+                <span className="badge">{favoritesCount}</span>
+              )}
+            </NavLink>
             <div className="nav-item">
               <div className="nav-item-sign-in">
                 <span>Sign In</span>
