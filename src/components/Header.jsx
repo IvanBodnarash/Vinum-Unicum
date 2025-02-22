@@ -8,13 +8,12 @@ import {
   faSearch,
   faCartPlus,
   faUser,
-  faXmark,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "../img/logo-white.png";
 import "./Header.scss";
-import { createPortal } from "react-dom";
+import Search from "./Search";
 
 export default function Header() {
   const { state: searchState, dispatch } = useSearch();
@@ -24,8 +23,14 @@ export default function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [inputValue, setInputValue] = useState(searchState.query);
 
-  const cartCount = cartState.cart.length;
-  const favoritesCount = cartState.favorites.length;
+  const cartItems = cartState.cart;
+  const cartCount = cartItems.reduce((acc, item) => acc + item.quantityCart, 0);
+  // console.log(cartCount);
+  const favoriteItems = cartState.favorites;
+  const favoritesCount = favoriteItems.reduce(
+    (acc, item) => acc + item.quantityFavorites,
+    0
+  );
 
   useEffect(() => {
     if (location.pathname === "/shop") {
@@ -54,15 +59,6 @@ export default function Header() {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearchSubmit();
-    }
-    if (e.key === "Escape") {
-      handleSearchCancel();
-    }
-  };
-
   const handleSearchCancel = () => {
     dispatch({ type: "RESET_QUERY" });
     setInputValue("");
@@ -78,10 +74,13 @@ export default function Header() {
     <header>
       <div className="header-wrapper">
         {/* use a tag for logo */}
-        <span className="header-logo">
-          <img src={logo} alt="logo" className="logo-header"></img>
-          {/* VINUM UNICUM */}
-        </span>
+        <NavLink to="/">
+          <span className="header-logo">
+            <img src={logo} alt="logo" className="logo-header"></img>
+            {/* VINUM UNICUM */}
+          </span>
+        </NavLink>
+
         <nav className="header-nav">
           <div className="header-nav-items">
             <NavLink
@@ -125,38 +124,27 @@ export default function Header() {
               Contact
             </NavLink>
             <span className="nav-item" onClick={toggleSearch}>
-              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon icon={faSearch} style={{ fontSize: "22px" }} />
             </span>
-            {isSearchVisible &&
-              createPortal(
-                <>
-                  <div
-                    className="overlay visible"
-                    onClick={handleSearchCancel}
-                  ></div>
-                  <div className="search-container open">
-                    <input
-                      type="text"
-                      placeholder="Search wines..."
-                      value={inputValue}
-                      onChange={handleInputChange}
-                      onKeyDown={handleKeyPress}
-                      autoFocus
-                    />
-                    <button onClick={handleSearchReset}>
-                      <FontAwesomeIcon icon={faXmark} />
-                    </button>
-                    <button onClick={handleSearchSubmit}>Search</button>
-                  </div>
-                </>,
-                document.body
-              )}
-            <span className="nav-item icon-badge">
-              <FontAwesomeIcon icon={faCartPlus} />
+            <Search
+              isSearchVisible={isSearchVisible}
+              handleSearchSubmit={handleSearchSubmit}
+              handleSearchCancel={handleSearchCancel}
+              handleSearchReset={handleSearchReset}
+              inputValue={inputValue}
+              handleInputChange={handleInputChange}
+            />
+            <div className="icon-badge">
               {cartCount > 0 && <span className="badge">{cartCount}</span>}
-            </span>
+              <span className="nav-item">
+                <FontAwesomeIcon
+                  icon={faCartPlus}
+                  style={{ fontSize: "22px" }}
+                />
+              </span>
+            </div>
             <NavLink to="/favorites" className="nav-item icon-badge">
-              <FontAwesomeIcon icon={faHeart} />
+              <FontAwesomeIcon icon={faHeart} style={{ fontSize: "22px" }} />
               {favoritesCount > 0 && (
                 <span className="badge">{favoritesCount}</span>
               )}
