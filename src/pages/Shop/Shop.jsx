@@ -1,36 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Parallax } from "react-scroll-parallax";
 
 import mockwines from "../../data/data";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import WineCard from "../../components/wineCard/WineCard";
 import {
   FormControl,
-  FormControlLabel,
   MenuItem,
   Select,
-  RadioGroup,
 } from "@mui/material";
 
 import {
   formControlSxStyle,
   sortSelecMenuPropsSx,
   sortSelectSxStyle,
-  sxStyle,
 } from "../../utils/muiConfig";
 import "../../styles/main-style.scss";
 import "./Shop.scss";
 
-// TODO:
-// - Fonts
-// - Wrapping into separete components filters
-// - Adding Sections for sorting
-// - Changing wine card components
-// - Changing product page
-// - Adding data to wines data file
-
-import { RadioCustom } from "../../utils/muiConfig";
 import { mapCountryToFilterValue, sortingOptions } from "../../utils/utils";
 import {
   foodPairingCategoriesMap,

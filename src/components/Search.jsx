@@ -2,7 +2,6 @@ import { createPortal } from "react-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
 
 export default function Search({
   isSearchVisible,

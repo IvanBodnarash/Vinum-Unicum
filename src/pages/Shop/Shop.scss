@@ -211,7 +211,7 @@
     cursor: pointer;
 
     input {
-      // flex: 1;
+      flex: 1;
       // width: 50%;
       cursor: pointer;
       font-family: "CaslonAntique";
@@ -220,14 +220,18 @@
       border: 1px solid lightgray;
     }
 
+    .cart-icon {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: #86a2ff;
+      }
+      &:active {
+        transform: scale(1.5);
+      }
+    }
+
     button {
-      // flex: 1;
-      // background-color: lightgray;
-      // border-radius: none;
-      // display: flex;
-      // gap: 0.5em;
-      // justify-content: center;
-      // align-items: center;
       cursor: pointer;
       transition: background-color 0.3s ease;
 

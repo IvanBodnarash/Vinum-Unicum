@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, IconButton, TextField } from "@mui/material";
 import { IoAdd, IoRemove } from "react-icons/io5";
 
-const CounterInput = ({ min = 1, max = 99, value, onChange, quantityCart }) => {
+const CounterInput = ({ min = 1, max = 99, value, onChange }) => {
   // console.log(quantityCart);
   const [count, setCount] = useState(value || min);
+
+  useEffect(() => {
+    setCount(value);
+  }, [value]);
 
   const handleIncrement = () => {
     if (count < max) {
@@ -25,12 +29,11 @@ const CounterInput = ({ min = 1, max = 99, value, onChange, quantityCart }) => {
   const handleChange = (e) => {
     let newValue = parseInt(e.target.value, 99);
     if (isNaN(newValue)) newValue = min;
-    // if (value < min) value = min;
-    // if (value > max) value = max;
     newValue = Math.max(min, Math.min(newValue, max));
     setCount(newValue);
     onChange?.(newValue);
   };
+
 
   return (
     <Box display="flex" alignItems="center">
@@ -39,7 +42,7 @@ const CounterInput = ({ min = 1, max = 99, value, onChange, quantityCart }) => {
         size="small"
         disabled={count <= min}
         sx={{
-          width: "30px",
+          width: "35px",
           height: "30px",
           border: "1px solid #ccc",
           borderRadius: "2px",
@@ -57,7 +60,7 @@ const CounterInput = ({ min = 1, max = 99, value, onChange, quantityCart }) => {
         <IoRemove />
       </IconButton>
       <TextField
-        value={count}
+        value={value}
         onChange={handleChange}
         type="number"
         size="small"
@@ -68,7 +71,7 @@ const CounterInput = ({ min = 1, max = 99, value, onChange, quantityCart }) => {
           style: {
             textAlign: "center",
             height: "12px",
-            width: "4px",
+            width: "8px",
             cursor: "pointer",
             pointerEvents: "none",
           },
@@ -101,7 +104,7 @@ const CounterInput = ({ min = 1, max = 99, value, onChange, quantityCart }) => {
         size="small"
         disabled={count >= max}
         sx={{
-          width: "30px",
+          width: "35px",
           height: "30px",
           border: "1px solid #ccc",
           borderRadius: "2px",

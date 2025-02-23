@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-// import {
-//   PiShoppingCartSimpleLight,
-//   PiShoppingCartSimpleFill,
-// } from "react-icons/pi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { BiWorld } from "react-icons/bi";
@@ -14,12 +10,10 @@ import { LuGrape } from "react-icons/lu";
 import "../../pages/Shop/Shop.scss";
 import { useCart } from "../../context/CartContext";
 import CounterInput from "./CounterInput";
-import { Scale } from "@mui/icons-material";
 
 const WineCard = ({ wine }) => {
   const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
-  const [hover, setHover] = useState(false);
   const [quantityCart, setQuantityCart] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
   const selectItem = (wine) => {
@@ -29,13 +23,10 @@ const WineCard = ({ wine }) => {
 
   const { dispatch } = useCart();
 
-  // const isFavorite = state.favorite.some((fav) => fav.id === wine.id);
-  // const isInCart = state.cart.some((item) => item.id === wine.id);
-
-  const handleQuantityChange = (e) => {
-    const value = Number(e.target.value);
-    setQuantityCart(value);
-  };
+  // const handleQuantityChange = (e) => {
+  //   const value = Number(e.target.value);
+  //   setQuantityCart(value);
+  // };
 
   const addToCartHandler = () => {
     dispatch({
@@ -113,28 +104,8 @@ const WineCard = ({ wine }) => {
           value={quantityCart}
           onChange={(newValue) => setQuantityCart(newValue)}
         />
-        {/* <input
-          type="number"
-          min="1"
-          value={quantityCart}
-          onChange={handleQuantityChange}
-        /> */}
-        {/* <button
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          onClick={addToCartHandler}
-        >
-          {!hover ? (
-            <PiShoppingCartSimpleLight />
-          ) : (
-            <PiShoppingCartSimpleFill />
-          )}
-        </button> */}
         <FontAwesomeIcon
+          className="cart-icon"
           icon={faCartPlus}
           onClick={addToCartHandler}
           size="xl"
@@ -142,9 +113,6 @@ const WineCard = ({ wine }) => {
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            "&:hover": {
-              color: "green",
-            },
           }}
         />
       </div>
