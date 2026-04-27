@@ -4,13 +4,13 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import RootLayout from "./components/Layouts/RootLayout";
 import Home from "./pages/Home/Home";
 import Shop from "./pages/Shop/Shop";
-import ShopItem from "./pages/ShopItem/ShopItem";
+import ShopItem from "./components/ShopItem/ShopItem";
 import Discover from "./pages/Discover/Discover";
 import AboutUs from "./pages/AboutUs/About Us";
 import Contact from "./pages/Contact/Contact";
 import ShopRootLayout from "./components/Layouts/ShopRootLayout";
 import { SearchProvider } from "./context/SearchContext";
-import { CartProvider } from "./context/CartContext";
+import { ShopProvider } from "./context/ShopContext";
 import Favorites from "./pages/Favorites/Favorites";
 
 const router = createBrowserRouter([
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <CartProvider>
+    <ShopProvider>
       <SearchProvider>
         <ParallaxProvider>
           <div className="main-wrapper">
@@ -45,7 +45,7 @@ function App() {
           </div>
         </ParallaxProvider>
       </SearchProvider>
-    </CartProvider>
+    </ShopProvider>
   );
 }
 

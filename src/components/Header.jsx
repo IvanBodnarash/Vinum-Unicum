@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSearch } from "../context/SearchContext";
-import { useCart } from "../context/CartContext";
+import { useShop } from "../context/ShopContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,7 +17,7 @@ import Search from "./Search";
 
 export default function Header() {
   const { state: searchState, dispatch } = useSearch();
-  const { state: cartState } = useCart();
+  const { state: cartState } = useShop();
   const navigate = useNavigate();
   const location = useLocation();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -25,12 +25,9 @@ export default function Header() {
 
   const cartItems = cartState.cart;
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantityCart, 0);
-  // console.log(cartCount);
+  console.log(cartCount);
   const favoriteItems = cartState.favorites;
-  const favoritesCount = favoriteItems.reduce(
-    (acc, item) => acc + item.quantityFavorites,
-    0
-  );
+  const favoritesCount = favoriteItems.length;
 
   useEffect(() => {
     if (location.pathname === "/shop") {

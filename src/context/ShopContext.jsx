@@ -5,7 +5,7 @@ const initialState = {
   favorites: [],
 };
 
-const cartReducer = (state, action) => {
+const shopReducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       return {
@@ -18,6 +18,14 @@ const cartReducer = (state, action) => {
         cart: state.cart.filter((item) => item.id !== action.payload),
       };
     case "ADD_TO_FAVORITES":
+      const alreadyFavorite = state.favorites.some(
+        (item) => item.id === action.payload.id
+      );
+
+      if (alreadyFavorite) {
+        return state;
+      }
+
       return {
         ...state,
         favorites: [...state.favorites, action.payload],
@@ -37,16 +45,16 @@ const cartReducer = (state, action) => {
   }
 };
 
-const CartContext = createContext();
+const ShopContext = createContext();
 
-export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+export const ShopProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(shopReducer, initialState);
 
   return (
-    <CartContext.Provider value={{ state, dispatch }}>
+    <ShopContext.Provider value={{ state, dispatch }}>
       {children}
-    </CartContext.Provider>
+    </ShopContext.Provider>
   );
 };
 
-export const useCart = () => useContext(CartContext);
+export const useShop = () => useContext(ShopContext);
