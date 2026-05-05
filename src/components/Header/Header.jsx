@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useSearch } from "../context/SearchContext";
-import { useShop } from "../context/ShopContext";
+import { useSearch } from "../../context/SearchContext";
+import { useShop } from "../../context/ShopContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,9 +11,12 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
-import logo from "../img/logo-white.png";
+import logo from "../../img/logo-white.png";
 import "./Header.scss";
-import Search from "./Search";
+import Search from "../Search";
+import Cart from "../Cart/Cart";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 export default function Header() {
   const { state: searchState, dispatch } = useSearch();
@@ -22,14 +25,16 @@ export default function Header() {
   const location = useLocation();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [inputValue, setInputValue] = useState(searchState.query);
+  const [showCart, setShowCart] = useState(false);
 
   const cartItems = cartState.cart;
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantityCart, 0);
-  console.log(cartCount);
+
   const favoriteItems = cartState.favorites;
   const favoritesCount = favoriteItems.length;
 
   useEffect(() => {
+    handleCloseCart();
     if (location.pathname === "/shop") {
       setIsSearchVisible(false);
       setInputValue("");
@@ -37,6 +42,7 @@ export default function Header() {
   }, [location]);
 
   const toggleSearch = () => {
+    handleCloseCart();
     if (location.pathname !== "/shop") {
       setIsSearchVisible((prev) => !prev);
     }
@@ -67,8 +73,16 @@ export default function Header() {
     setInputValue("");
   };
 
+  const handleCloseCart = () => {
+    setShowCart(false);
+  };
+
+  const handleCloseCartRef = useOutsideClick(() => {
+    handleCloseCart();
+  });
+
   return (
-    <header>
+    <header ref={handleCloseCartRef}>
       <div className="header-wrapper">
         {/* use a tag for logo */}
         <NavLink to="/">
@@ -131,14 +145,32 @@ export default function Header() {
               inputValue={inputValue}
               handleInputChange={handleInputChange}
             />
-            <div className="icon-badge">
-              {cartCount > 0 && <span className="badge">{cartCount}</span>}
-              <span className="nav-item">
-                <FontAwesomeIcon
-                  icon={faCartPlus}
-                  style={{ fontSize: "22px" }}
-                />
-              </span>
+            <div className="cart-badge">
+              <div
+                className="icon-badge"
+                onClick={() => setShowCart((prev) => !prev)}
+              >
+                {cartCount > 0 && <span className="badge">{cartCount}</span>}
+                <span className="nav-item">
+                  <FontAwesomeIcon
+                    icon={faCartPlus}
+                    style={{ fontSize: "22px" }}
+                  />
+                </span>
+              </div>
+              <TransitionGroup>
+                {showCart && (
+                  <CSSTransition
+                    in={showCart}
+                    timeout={1000}
+                    classNames="fade"
+                    unmountOnExit
+                    appear
+                  >
+                    <Cart />
+                  </CSSTransition>
+                )}
+              </TransitionGroup>
             </div>
             <NavLink to="/favorites" className="nav-item icon-badge">
               <FontAwesomeIcon icon={faHeart} style={{ fontSize: "22px" }} />

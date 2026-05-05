@@ -9,8 +9,6 @@ export default function Favorites() {
   const { state } = useShop();
   const favoriteItems = state.favorites;
 
-  console.log(favoriteItems);
-
   return (
     <main className="favorites-wrapper">
       <Parallax className="background" speed={-3} scale={[1, 1.03]}>

@@ -96,7 +96,7 @@ const WineCard = ({ wine }) => {
       <div className="add-container">
         <CounterInput
           min={1}
-          max={99}
+          max={wine.inStock}
           value={quantityCart}
           onChange={(newValue) => setQuantityCart(newValue)}
         />
