@@ -15,7 +15,7 @@ const WineCard = ({ wine }) => {
   const navigate = useNavigate();
   const [quantityCart, setQuantityCart] = useState(1);
 
-  const {state, dispatch} = useShop();
+  const { state, dispatch } = useShop();
 
   const isFavorite = state.favorites.some((item) => item.id === wine.id);
 
@@ -55,20 +55,11 @@ const WineCard = ({ wine }) => {
 
   return (
     <div className="wine-card">
-      <div
-        className="favorites"
-        onClick={toggleFavoriteHandler}
-      >
+      <div className="favorites" onClick={toggleFavoriteHandler}>
         {isFavorite ? (
-          <GoHeartFill
-            size={24}
-            className="heart"
-          />
+          <GoHeartFill size={24} className="heart" />
         ) : (
-          <GoHeart
-            size={24}
-            className="heart"
-          />
+          <GoHeart size={24} className="heart" />
         )}
       </div>
 
@@ -93,24 +84,20 @@ const WineCard = ({ wine }) => {
           <span style={{ fontWeight: "bold" }}>${wine.price} USD</span>
         </div>
       </div>
-      <div className="add-container">
+      <div className="add-container" data-ignore-outside-click="true">
         <CounterInput
           min={1}
           max={wine.inStock}
           value={quantityCart}
           onChange={(newValue) => setQuantityCart(newValue)}
         />
-        <FontAwesomeIcon
-          className="cart-icon"
-          icon={faCartPlus}
+        <button
+          type="button"
+          className="add-to-cart-button"
           onClick={addToCartHandler}
-          size="xl"
-          style={{
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-          }}
-        />
+        >
+          <FontAwesomeIcon className="cart-icon" icon={faCartPlus} size="xl" />
+        </button>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import {
 import logo from "../../img/logo-white.png";
 import "./Header.scss";
 import Search from "../Search";
-import Cart from "../Cart/Cart";
+import Cart from "../ShoppingCart/Cart";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
@@ -167,7 +167,7 @@ export default function Header() {
                     unmountOnExit
                     appear
                   >
-                    <Cart />
+                    <Cart onClose={handleCloseCart} />
                   </CSSTransition>
                 )}
               </TransitionGroup>

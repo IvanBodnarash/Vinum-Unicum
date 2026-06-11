@@ -3,14 +3,21 @@ import { useShop } from "../../context/ShopContext";
 import "./Cart.scss";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import CartItem from "./CartItem";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const { state } = useShop();
+  const navigate = useNavigate();
   const cartItems = state.cart;
+  const isDisabled = cartItems.length === 0;
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantityCart,
     0,
   );
+
+  const handleNavigate = () => {
+    navigate("/checkout");
+  };
 
   return (
     <div className="container">
@@ -34,9 +41,13 @@ export default function Cart() {
           )}
         </ul>
 
-        <a href="#" className="button">
+        <button
+          disabled={isDisabled}
+          onClick={handleNavigate}
+          className="button"
+        >
           Checkout
-        </a>
+        </button>
       </div>
     </div>
   );

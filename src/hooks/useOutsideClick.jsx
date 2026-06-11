@@ -4,18 +4,24 @@ export const useOutsideClick = (callback) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClick = (event) => {
+      const clickedIgnoredElement = event.target.closest(
+        "[data-ignore-outside-click='true']",
+      );
+
+      if (clickedIgnoredElement) {
+        return;
+      }
+
       if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }
     };
 
-    document.addEventListener("mouseup", handleClickOutside);
-    document.addEventListener("touchend", handleClickOutside);
+    document.addEventListener("mousedown", handleClick);
 
     return () => {
-      document.removeEventListener("mouseup", handleClickOutside);
-      document.removeEventListener("touchend", handleClickOutside);
+      document.addEventListener("mousedown", handleClick);
     };
   }, [callback]);
 

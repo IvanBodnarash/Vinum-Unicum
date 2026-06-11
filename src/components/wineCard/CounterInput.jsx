@@ -89,6 +89,11 @@ const CounterInput = ({
             borderLeft: "none",
             borderRight: "none",
             borderRadius: "0",
+            cursor: "pointer",
+
+            "& fieldset": {
+              border: "none",
+            },
           },
 
           "& .MuiOutlinedInput-input": {
@@ -97,13 +102,13 @@ const CounterInput = ({
             color: "white",
             fontSize: `${fontSize}px`,
             lineHeight: `${controlHeight}px`,
-            cursor: "default",
             pointerEvents: "none",
           },
 
-          "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
-            display: "none",
-          },
+          "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+            {
+              display: "none",
+            },
 
           "& input[type=number]": {
             MozAppearance: "textfield",

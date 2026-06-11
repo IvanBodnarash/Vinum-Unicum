@@ -8,10 +8,12 @@ import ShopItem from "./components/ShopItem/ShopItem";
 import Discover from "./pages/Discover/Discover";
 import AboutUs from "./pages/AboutUs/About Us";
 import Contact from "./pages/Contact/Contact";
-import ShopRootLayout from "./components/Layouts/ShopRootLayout";
 import { SearchProvider } from "./context/SearchContext";
 import { ShopProvider } from "./context/ShopContext";
 import Favorites from "./pages/Favorites/Favorites";
+import Checkout from "./pages/Checkout/Checkout";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./utils/muiConfig";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,6 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       {
         path: "shop",
-        element: <ShopRootLayout />,
         children: [
           { index: true, element: <Shop /> },
           { path: ":productId", element: <ShopItem /> },
@@ -31,21 +32,24 @@ const router = createBrowserRouter([
       { path: "aboutUs", element: <AboutUs /> },
       { path: "contact", element: <Contact /> },
       { path: "favorites", element: <Favorites /> },
+      { path: "checkout", element: <Checkout /> },
     ],
   },
 ]);
 
 function App() {
   return (
-    <ShopProvider>
-      <SearchProvider>
-        <ParallaxProvider>
-          <div className="main-wrapper">
-            <RouterProvider router={router} />
-          </div>
-        </ParallaxProvider>
-      </SearchProvider>
-    </ShopProvider>
+    <ThemeProvider theme={theme}>
+      <ShopProvider>
+        <SearchProvider>
+          <ParallaxProvider>
+            <div className="main-wrapper">
+              <RouterProvider router={router} />
+            </div>
+          </ParallaxProvider>
+        </SearchProvider>
+      </ShopProvider>
+    </ThemeProvider>
   );
 }
 

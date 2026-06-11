@@ -32,10 +32,13 @@ $light-text: #ABB0BE;
     }
 
     .shopping-cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
         max-height: 500px;
         overflow-y: auto;
         padding-top: 2px;
-        padding-right: 1px;
+        padding-right: 14px;
     }
 
     .empty-cart-text {
@@ -84,6 +87,7 @@ $light-text: #ABB0BE;
 .button {
     background: $main-color;
     color: white;
+    width: 100%;
     text-align: center;
     padding: 12px;
     margin-top: 15px;
@@ -92,9 +96,15 @@ $light-text: #ABB0BE;
     border-radius: 3px;
     font-size: 16px;
     font-family: "Montserrat";
+    cursor: pointer;
 
     &:hover {
         background: lighten($main-color, 3%);
+    }
+
+    &:disabled {
+        background: lighten($main-color, 10%);
+        cursor: not-allowed;
     }
 }
 
@@ -104,7 +114,6 @@ $light-text: #ABB0BE;
     align-items: flex-start;
     gap: 12px;
     justify-content: space-between;
-    margin-bottom: 18px;
 
     .item-img-text {
         display: flex;
