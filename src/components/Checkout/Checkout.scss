@@ -1,0 +1,94 @@
+.checkout-details {
+    width: 50%;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid white;
+
+    .checkout-radio-group {
+        width: 100%;
+        display: flex;
+        gap: 15px;
+
+        .checkout-option {
+            flex: 2;
+            margin: 0;
+            padding: 8px;
+            border: 1px solid gray;
+            border-radius: 8px;
+            color: rgb(201, 201, 201);
+            transition: all ease-in-out 0.3s;
+
+            &:hover {
+                border-color: #cdcdcd;
+                color: #cdcdcd;
+            }
+
+            &.selected {
+                border-color: #fff;
+                color: #fff
+            }
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+    .form-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 0;
+
+        .form-item-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        .form-item {
+            display: flex;
+            width: 100%;
+            font-family: "Montserrat";
+            flex-direction: column;
+            gap: 4px;
+
+            >input {
+                padding: 8px 8px 8px 10px;
+                border-radius: 5px;
+                background-color: transparent;
+                border: 1px solid white;
+                color: rgb(185, 185, 185);
+
+                transition: box-shadow 0.3s ease-in-out,
+                    color 0.3s ease-in-out;
+
+                &:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 2px white;
+                    color: white;
+                }
+            }
+
+            >span {
+                color: rgb(231, 121, 121);
+            }
+
+            .phone-wrapper {
+                width: 100%;
+                position: relative;
+            }
+
+            .phone-container {
+                width: 100%;
+
+                .country-list,
+                .phone-dropdown {
+                    scroll-behavior: auto;
+                }
+            }
+        }
+    }
+}

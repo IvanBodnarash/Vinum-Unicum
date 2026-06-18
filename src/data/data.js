@@ -31,7 +31,7 @@ const mockwines = [
     type: "white",
     relevance: 85,
     imageUrl:
-      "https://freshvinewine.com/content/productimage/1_CHARDONNAY_SLIDER-min.png",
+      "https://boglewinery.com/wp-content/uploads/2018/04/Bogle-Chardonnay-California-750ml-Front-NV-HD-scaled-e1773167489339.png",
     country: "France",
     location: "Burgundy",
     description:
@@ -53,7 +53,7 @@ const mockwines = [
     type: "red",
     relevance: 90,
     imageUrl:
-      "https://www.jeffersonvineyards.com/assets/images/products/pictures/OUTSHINERY-Jefferson-Merlot-2022.png",
+      "https://www.casaledelgiglio.it/wp-content/uploads/MERLOT.png",
     country: "Italy",
     location: "Tuscany",
     description:
@@ -76,7 +76,7 @@ const mockwines = [
     type: "red",
     relevance: 75,
     imageUrl:
-      "https://www.maset.com/cdnassets/products/red-wines/lg/bottle/pinot-noir-lg-1.png",
+      "https://www.kellerei-kurtatsch.it/images/image_tiny_auto/kellerei_cantina_kurtatsch_blauburgunder_pinot_nero.png?ts=1743611260",
     country: "USA",
     location: "Oregon",
     description:
